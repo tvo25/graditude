@@ -10,7 +10,7 @@ class Source(models.Model):
                     ('LinkedIn', 'LinkedIn'),
                     ('Monster', 'Monster'))
     name = models.CharField(max_length=255, choices=NAME_CHOICES)
-    using_api = models.BooleanField()
+    from_api = models.BooleanField()
 
 
 class Post(models.Model):
@@ -18,7 +18,7 @@ class Post(models.Model):
     company = models.ForeignKey('Company', on_delete=models.CASCADE)
     description = models.TextField()
     posted_on = models.DateField()
-    added = models.DateField(auto_created=True)
-    sponsored = models.BooleanField()
+    added = models.DateField(auto_now_add=True)
+    is_sponsored = models.BooleanField()
     source = models.ForeignKey('Source', on_delete=models.CASCADE)
     link = models.URLField()
