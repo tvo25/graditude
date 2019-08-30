@@ -16,6 +16,7 @@ urlpatterns = [
     path("users/", include("graditude.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
+    path("jobs/api/v1/", include('graditude.jobs.urls', namespace='jobs'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
