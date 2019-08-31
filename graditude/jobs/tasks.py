@@ -1,15 +1,23 @@
 # %%
 import datetime
+import requests
 from typing import List
 
 import pandas as pd
 from bs4 import BeautifulSoup as bs
-import requests
 from tqdm import tqdm
+from celery import shared_task
 
 
 def parse_container(containers: List[str], parsed_df: pd.DataFrame) -> pd.DataFrame:
     """ Parses the containers for the specified fields """
+    today = datetime.date.today()
+
+    span_cols = {
+        "company": "company",
+        "location": "location",
+        "date_posted": "date",
+    }
     for container in containers:
         columns = {k: find_strip(container, "span", v) for k, v in span_cols.items()}
         columns["job_title"] = container.a.text
@@ -40,8 +48,8 @@ def parse_postings(df: pd.DataFrame) -> pd.DataFrame:
     return df[~df['company'].isin(spam_companies)]
 
 
-if __name__ == "__main__":
-    today = datetime.date.today()
+@shared_task(bind=True, task_name="Scrape Indeed")
+def scrape_indeed():
     jobs_df = pd.DataFrame()
 
     # Query searches and num of pages to search (intervals of 10)
@@ -57,14 +65,11 @@ if __name__ == "__main__":
             soup = bs(page_html.content, "html.parser")
             job_containers = soup.findAll("div", {"class": "row"})
 
-            span_cols = {
-                "company": "company",
-                "location": "location",
-                "date_posted": "date",
-            }
-
-
             jobs_df = parse_container(job_containers, jobs_df)
 
-    jobs_df = parse_postings(jobs_df)
+    return parse_postings(jobs_df)
+
+
+if __name__ == "__main__":
+    scrape_indeed()
 # %%
