@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Company(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
 
 
 class Source(models.Model):
@@ -15,10 +15,13 @@ class Source(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
-    company = models.ForeignKey('Company', on_delete=models.CASCADE)
+    company = models.ForeignKey('Company', to_field='name', on_delete=models.CASCADE)
     description = models.TextField()
-    posted_on = models.DateField()
-    added = models.DateField(auto_now_add=True)
     is_sponsored = models.BooleanField()
+    date_posted = models.DateField(null=True)
+    date_added_db = models.DateField(auto_now_add=True)
     source = models.ForeignKey('Source', on_delete=models.CASCADE)
-    link = models.URLField()
+    link = models.TextField()
+
+    class Meta:
+        unique_together = (('company', 'title', 'date_posted'))
