@@ -1,7 +1,11 @@
 Graditude
 =========
 
+.. image:: https://travis-ci.com/tvo25/graditude.svg?branch=master
+    :target: https://travis-ci.com/tvo25/graditude
 
+.. image:: https://codecov.io/gh/tvo25/graditude/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/tvo25/graditude
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
      :target: https://github.com/ambv/black

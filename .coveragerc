@@ -2,13 +2,17 @@
 include = graditude/*
 omit =
     *apps.py,
-    *migrations/*,
-    *settings*,
-    *tests/*,
     *urls.py,
-    *wsgi/*,
-    */manage.py
-    */venv/*
+    *manage.py,
+    *wsgi.py*,
+    *migrations/*,
+    */venv/*,
+    *docs/*
+    *tests/*,
+
+    *settings*,
+    *merge_production_dotenvs_in_dotenv.py*,
+
 
 [html]
 directory = htmlcov
