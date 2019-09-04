@@ -20,7 +20,7 @@ def scrape_indeed(self):
     perform parsing the fields of a post.
     """
 
-    searches = {"Software+Engineer", "Software+Developer"}
+    searches = {"Software+Engineer"}
     pages = range(0, 1001, 10)
 
     fields = [f.name for f in Post._meta.get_fields()]
