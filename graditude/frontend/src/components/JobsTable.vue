@@ -1,11 +1,15 @@
 <template>
     <div id="JobsTable">
         <v-data-table
+                dense
+                calculate-widths
+                fixed-header
                 :headers="headers"
                 :items="posts"
                 :items-per-page="20"
                 class="elevation-1"
-
+                :loading="loading"
+                loading-text="Loading job listings, please wait..."
         ></v-data-table>
     </div>
 </template>
@@ -35,6 +39,7 @@
                     }
                 ],
                 posts: [],
+                loading: true
 
             }
         },
@@ -44,6 +49,7 @@
                     .get('/jobs/api/v1/posts/')
                     .then(response => {
                         this.posts = response.data
+                        this.loading = false
 
                     })
                     .catch(error => {
