@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-content>
-          <JobsTable></JobsTable>
+            <router-view/>
         </v-content>
     </v-app>
 </template>
