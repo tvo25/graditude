@@ -2,15 +2,15 @@
     <div id="JobsTable">
         <b-field grouped group-multiline>
             <b-select v-model="perPage" :disabled="!isPaginated">
-                <option value="5">5 per page</option>
                 <option value="10">10 per page</option>
                 <option value="15">15 per page</option>
                 <option value="20">20 per page</option>
             </b-select>
         </b-field>
-        <b-table :data="data"
+        <b-table id="jobs-table"
+                 :data="data"
                  :loading="loading"
-                 
+
                  :paginated="isPaginated"
                  :per-page="perPage"
                  :current-page.sync="currentPage"
@@ -35,6 +35,9 @@
 
                 <b-table-column field="company" label="Company" width="150" sortable>
                     {{ props.row.company }}
+                </b-table-column>
+                <b-table-column field="location" label="Location" width="150" sortable>
+                    {{ props.row.location }}
                 </b-table-column>
 
                 <b-table-column field="description" label="Description" sortable>
@@ -63,7 +66,7 @@
                 isPaginationSimple: false,
                 paginationPosition: 'bottom',
                 currentPage: 1,
-                perPage: 5
+                perPage: 10
 
 
             }

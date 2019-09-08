@@ -9,7 +9,7 @@ ROOT_DIR = (
     environ.Path(__file__) - 3
 )  # (graditude/config/settings/base.py - 3 = graditude/)
 APPS_DIR = ROOT_DIR.path("graditude")
-FRONTEND_DIR = os.path.join(APPS_DIR, 'frontend')
+FRONTEND_DIR = ROOT_DIR.path("frontend")
 
 env = environ.Env()
 
