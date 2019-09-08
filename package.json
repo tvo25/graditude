@@ -1,8 +1,10 @@
 {
+  "name": "graditude",
+  "version": "0.1.0",
   "cacheDirectories": [
     "frontend/node_modules"
   ],
-  "scripts": {
+  "start": {
     "postinstall": "cd frontend && npm install"
   }
 }
