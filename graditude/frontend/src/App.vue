@@ -1,18 +1,12 @@
 <template>
-    <v-app>
-        <v-content>
-            <router-view/>
-        </v-content>
-    </v-app>
+    <div id="app">
+        <router-view/>
+    </div>
 </template>
 
 <script>
-    import JobsTable from './components/JobsTable';
 
     export default {
         name: 'App',
-        components: {
-            JobsTable: JobsTable
-        },
     };
 </script>
