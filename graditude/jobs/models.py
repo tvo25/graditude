@@ -17,6 +17,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     company = models.ForeignKey('Company', to_field='name', on_delete=models.CASCADE)
     description = models.TextField()
+    location = models.CharField(max_length=255, null=True)
     is_sponsored = models.BooleanField()
     date_posted = models.DateField(null=True)
     date_added_db = models.DateField(auto_now_add=True)

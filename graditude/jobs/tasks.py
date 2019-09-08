@@ -20,7 +20,7 @@ def scrape_indeed(self):
     perform parsing the fields of a post.
     """
 
-    searches = {"Software+Engineer"}
+    searches = {"Software+Engineer", "Software+Developer"}
     pages = range(0, 1001, 10)
 
     fields = [f.name for f in Post._meta.get_fields()]
@@ -126,6 +126,7 @@ def save_posts(df: pd.DataFrame):
             defaults={
                 'date_posted': record['date_posted'],
                 'description': record['description'],
+                'location': record['location'],
                 'is_sponsored': False,
                 'date_added_db': record['date_added_db'],
                 'source_id': record['source'],
