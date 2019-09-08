@@ -1,4 +1,4 @@
 {
   "cacheDirectories": ["frontend/node_modules"],
-  "start": "cd frontend && npm install"
+  "start": "{'postinstall': 'cd frontend && npm install'}"
 }
