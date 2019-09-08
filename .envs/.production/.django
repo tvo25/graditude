@@ -17,11 +17,13 @@ MAILGUN_API_KEY=
 DJANGO_SERVER_EMAIL=
 MAILGUN_DOMAIN=
 
-# AWS
+# GCP
 # ------------------------------------------------------------------------------
-DJANGO_AWS_ACCESS_KEY_ID=
-DJANGO_AWS_SECRET_ACCESS_KEY=
-DJANGO_AWS_STORAGE_BUCKET_NAME=
+GOOGLE_APPLICATION_CREDENTIALS=
+DJANGO_GCP_STORAGE_BUCKET_NAME=
+DJANGO_GS_SECRET_ACCESS_KEY=
+DJANGO_GS_ACCESS_KEY_ID=
+
 
 # django-allauth
 # ------------------------------------------------------------------------------
