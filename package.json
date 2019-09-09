@@ -1,3 +1,5 @@
 {
-  "start": "cd graditude/frontend && npm run build"
+  "scripts": {
+    "heroku-prebuild": "cd frontend && npm install && npm run build"
+  }
 }
