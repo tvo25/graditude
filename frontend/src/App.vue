@@ -10,3 +10,21 @@
         name: 'App',
     };
 </script>
+
+<style>
+    @import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
+    @import url("https://fonts.googleapis.com/css?family=Raleway:300&display=swap");
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: "Raleway", sans-serif;
+    }
+
+    p {
+        font-family: "Lato", sans-serif;
+    }
+</style>
