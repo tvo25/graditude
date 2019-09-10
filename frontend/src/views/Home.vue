@@ -55,7 +55,7 @@
                         </figure>
                         <p class="promo-caption">Ad-free, stress-free.</p>
                         <p class="light center">Straight to the point, Graditude makes job-hunting stress-free by
-                            filtering out ads. The less clicks made, the more efficient time is spent.</p>
+                            filtering out ads and displaying posts in a tabular format. The less clicks made, the more efficient time is spent.</p>
                     </div>
                     <div class="column is-one-third has-text-centered" data-aos="zoom-in">
                         <figure class="image is-128x128 is-horizontal-center">
@@ -68,12 +68,17 @@
                     </div>
                 </div>
             </div>
-            <div class="columns is-centered">
-                <div class="column is-one-quarter has-text-centered">
-                    <a href="" class="button is-info">Ready to elevate your search?</a>
-                </div>
-            </div>
 
+        </section>
+        <section>
+            <div class="container">
+                <div class="columns is-centered" data-aos="fade-left">
+                    <div class="column is-one-quarter has-text-centered">
+                        <a href="" class="button is-info">Ready to elevate your search?</a>
+                    </div>
+                </div>
+
+            </div>
         </section>
         <section class="section">
             <div class="container">
