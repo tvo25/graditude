@@ -6,6 +6,7 @@
     "node": "10.16.0"
   },
   "scripts": {
-    "heroku-prebuild": "cd frontend && npm install && npm run build"
+    "heroku-prebuild": "cd frontend && npm install",
+    "heroku-build": "cd frontend && npm run build"
   }
 }
