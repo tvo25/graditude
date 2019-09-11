@@ -7,8 +7,7 @@ from bs4 import BeautifulSoup as bs
 from tqdm import tqdm
 from celery import shared_task
 
-from graditude.jobs.models import Post, Company
-
+from graditude.jobs.models import Company, Position, Post
 
 @shared_task(bind=True, task_name="Scrape Indeed")
 def scrape_indeed(self):
@@ -19,8 +18,9 @@ def scrape_indeed(self):
     'containers' with a class of 'row'. After fetching each container,
     perform parsing the fields of a post.
     """
+    positions = Position.objects.all()
+    searches = [obj.search_str() for obj in positions]
 
-    searches = {"Software+Engineer", "Software+Developer"}
     pages = range(0, 1001, 10)
 
     fields = [f.name for f in Post._meta.get_fields()]

@@ -13,6 +13,16 @@ class Source(models.Model):
     from_api = models.BooleanField()
 
 
+class Position(models.Model):
+    TITLE_CHOICES = (('Software Engineer', 'Software Engineer'),
+                     ('Full Stack Engineer', 'Full Stack Engineer'),
+                     ('Front End Engineer', 'Front End Engineer'),
+                     ('Back End Engineer', 'Back End Engineer'))
+    title = models.CharField(max_length=255, choices=TITLE_CHOICES)
+
+    def search_str(self):
+        return self.title.replace(' ', '+')
+
 class Post(models.Model):
     title = models.CharField(max_length=255)
     company = models.ForeignKey('Company', to_field='name', on_delete=models.CASCADE)
@@ -23,6 +33,7 @@ class Post(models.Model):
     date_added_db = models.DateField(auto_now_add=True)
     source = models.ForeignKey('Source', on_delete=models.CASCADE)
     link = models.TextField()
+    position = models.ForeignKey('Position', on_delete=models.SET_NULL, null=True)
 
     class Meta:
         unique_together = (('company', 'title', 'date_posted'))
