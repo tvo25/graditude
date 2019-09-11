@@ -6,7 +6,10 @@
     "node": "10.16.0"
   },
   "scripts": {
-    "heroku-prebuild": "cd frontend && npm install",
-    "heroku-build": "cd frontend && npm run build"
-  }
+    "postinstall": "cd frontend && npm install",
+    "build": "cd frontend && npm run build"
+  },
+  "cacheDirectories": [
+    "frontend/node_modules"
+  ]
 }
