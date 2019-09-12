@@ -18,10 +18,11 @@ class Position(models.Model):
                      ('Full Stack Engineer', 'Full Stack Engineer'),
                      ('Front End Engineer', 'Front End Engineer'),
                      ('Back End Engineer', 'Back End Engineer'))
-    title = models.CharField(max_length=255, choices=TITLE_CHOICES)
+    title = models.CharField(max_length=255, choices=TITLE_CHOICES, unique=True)
 
     def search_str(self):
         return self.title.replace(' ', '+')
+
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
