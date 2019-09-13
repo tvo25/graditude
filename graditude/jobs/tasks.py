@@ -5,12 +5,13 @@ from typing import List, Union
 import pandas as pd
 from bs4 import BeautifulSoup as bs
 from tqdm import tqdm
-from celery import shared_task
 
+from config import celery_app
 from graditude.jobs.models import Company, Position, Post
 
-@shared_task(bind=True, task_name="Scrape Indeed")
-def scrape_indeed(self):
+
+@celery_app.task()
+def scrape_indeed():
     """
     Performs the web scrapping process using BeautifulSoup4 and pandas
     for data processing. The web page is fetched using the request
