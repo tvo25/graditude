@@ -23,6 +23,8 @@ def scrape_indeed():
     'containers' with a class of 'row'. After fetching each container,
     perform parsing the fields of a post.
     """
+    logger.info('Executing scraper')
+
     positions = Position.objects.all()
     searches = [obj.search_str() for obj in positions]
 
@@ -30,9 +32,8 @@ def scrape_indeed():
     fields = [f.name for f in Post._meta.get_fields()]
     df = pd.DataFrame(columns=fields)
 
-    logger.info('Executing scraper')
     for search in searches:
-        for page in tqdm(pages):
+        for page in pages:
             page_html = requests.get(
                 f"https://www.indeed.com/jobs?q={search}&sort=date&l=California&explvl=entry_level&sort=date&start={page}"
             )
@@ -50,7 +51,6 @@ def scrape_indeed():
 def parse_container(containers: List[str], df: pd.DataFrame) -> pd.DataFrame:
     """ Parses the containers for the specified fields """
     today = date.today()
-
     span_fields = {'company', 'location', 'date'}
 
     for container in containers:
@@ -109,10 +109,12 @@ def parse_postings(df: pd.DataFrame) -> pd.DataFrame:
      """
     logger.info('Parsing posts')
 
+    df.title = df.title.str.strip()
+
     spam_companies = ['Indeed Prime']
     df = df[~df['company'].isin(spam_companies)]
+    df = df.dropna(subset=['company'])
     df = df.drop_duplicates(subset=['company', 'date_posted', 'title'])
-    df.title = df.title.str.strip()
     return df
 
 
