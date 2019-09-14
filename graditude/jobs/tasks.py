@@ -1,13 +1,17 @@
+import logging
 from datetime import date, timedelta
-import requests
 from typing import List, Union
 
+import requests
 import pandas as pd
 from bs4 import BeautifulSoup as bs
 from tqdm import tqdm
 
 from config import celery_app
 from graditude.jobs.models import Company, Position, Post
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 
 @celery_app.task()
@@ -23,10 +27,10 @@ def scrape_indeed():
     searches = [obj.search_str() for obj in positions]
 
     pages = range(0, 1001, 10)
-
     fields = [f.name for f in Post._meta.get_fields()]
     df = pd.DataFrame(columns=fields)
 
+    logger.info('Executing scraper')
     for search in searches:
         for page in tqdm(pages):
             page_html = requests.get(
@@ -40,7 +44,7 @@ def scrape_indeed():
 
     df = parse_postings(df)
 
-    return df
+    save_posts(df)
 
 
 def parse_container(containers: List[str], df: pd.DataFrame) -> pd.DataFrame:
@@ -66,7 +70,7 @@ def parse_container(containers: List[str], df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def parse_date(date_posted, today):
+def parse_date(date_posted: str, today: date.today) -> Union[date, None]:
     """
     Parses the date field based to return the correct value.
     if the value is 'Just Posted' or 'Today', set day = 0.
@@ -103,6 +107,8 @@ def parse_postings(df: pd.DataFrame) -> pd.DataFrame:
      there are multiple of the same job posting listed on different days
      which is not useful to search through for the end-user.
      """
+    logger.info('Parsing posts')
+
     spam_companies = ['Indeed Prime']
     df = df[~df['company'].isin(spam_companies)]
     df = df.drop_duplicates(subset=['company', 'date_posted', 'title'])
@@ -115,6 +121,7 @@ def save_posts(df: pd.DataFrame):
     Saves each dataframe row as a record using Django's get_or_create
     (object only saves if it doesn't already exist)
     """
+    logger.info('Savings posts to database')
     records = df.to_dict('records')
 
     for record in records:
