@@ -1,7 +1,6 @@
-Graditude
-=========
+.. image:: frontend/src/assets/img/logo.png
+    :align: center
 
-Gradtitude is Job 1.
 
 .. image:: https://travis-ci.com/tvo25/graditude.svg?branch=master
     :target: https://travis-ci.com/tvo25/graditude
