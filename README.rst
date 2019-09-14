@@ -1,7 +1,6 @@
 .. image:: frontend/src/assets/img/logo.png
     :align: center
 
-
 .. image:: https://travis-ci.com/tvo25/graditude.svg?branch=master
     :target: https://travis-ci.com/tvo25/graditude
 
@@ -16,7 +15,7 @@
      :target: https://opensource.org/licenses/MIT
      :alt: MIT License
 
-
+Graditude is a project designed for new graduate software engineers to land their next job without the stress of never-ending searches. Graditude's design is focused on minimalism to provide a streamlined job hunting experience. Whether the focus is in software engineering or web dev, we've got you covered. Remember, Graditude is Job 1.
 
 Settings
 --------
@@ -89,8 +88,6 @@ Please note: For Celery's import magic to work, it is important *where* the cele
 
 
 
-
-
 Deployment
 ----------
 
@@ -102,8 +99,5 @@ Heroku
 
 See detailed `cookiecutter-django Heroku documentation`_.
 
+
 .. _`cookiecutter-django Heroku documentation`: http://cookiecutter-django.readthedocs.io/en/latest/deployment-on-heroku.html
-
-
-
-
