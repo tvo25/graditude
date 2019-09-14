@@ -1,17 +1,21 @@
+import logging
 from datetime import date, timedelta
-import requests
 from typing import List, Union
 
+import requests
 import pandas as pd
 from bs4 import BeautifulSoup as bs
 from tqdm import tqdm
-from celery import shared_task
 
-from graditude.jobs.models import Post, Company
+from config import celery_app
+from graditude.jobs.models import Company, Position, Post
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 
-@shared_task(bind=True, task_name="Scrape Indeed")
-def scrape_indeed(self):
+@celery_app.task()
+def scrape_indeed():
     """
     Performs the web scrapping process using BeautifulSoup4 and pandas
     for data processing. The web page is fetched using the request
@@ -19,15 +23,17 @@ def scrape_indeed(self):
     'containers' with a class of 'row'. After fetching each container,
     perform parsing the fields of a post.
     """
+    logger.info('Executing scraper')
 
-    searches = {"Software+Engineer", "Software+Developer"}
+    positions = Position.objects.all()
+    searches = [obj.search_str() for obj in positions]
+
     pages = range(0, 1001, 10)
-
     fields = [f.name for f in Post._meta.get_fields()]
     df = pd.DataFrame(columns=fields)
 
     for search in searches:
-        for page in tqdm(pages):
+        for page in pages:
             page_html = requests.get(
                 f"https://www.indeed.com/jobs?q={search}&sort=date&l=California&explvl=entry_level&sort=date&start={page}"
             )
@@ -39,13 +45,12 @@ def scrape_indeed(self):
 
     df = parse_postings(df)
 
-    return df
+    save_posts(df)
 
 
 def parse_container(containers: List[str], df: pd.DataFrame) -> pd.DataFrame:
     """ Parses the containers for the specified fields """
     today = date.today()
-
     span_fields = {'company', 'location', 'date'}
 
     for container in containers:
@@ -65,7 +70,7 @@ def parse_container(containers: List[str], df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def parse_date(date_posted, today):
+def parse_date(date_posted: str, today: date.today) -> Union[date, None]:
     """
     Parses the date field based to return the correct value.
     if the value is 'Just Posted' or 'Today', set day = 0.
@@ -102,10 +107,14 @@ def parse_postings(df: pd.DataFrame) -> pd.DataFrame:
      there are multiple of the same job posting listed on different days
      which is not useful to search through for the end-user.
      """
+    logger.info('Parsing posts')
+
+    df.title = df.title.str.strip()
+
     spam_companies = ['Indeed Prime']
     df = df[~df['company'].isin(spam_companies)]
+    df = df.dropna(subset=['company'])
     df = df.drop_duplicates(subset=['company', 'date_posted', 'title'])
-    df.title = df.title.str.strip()
     return df
 
 
@@ -114,6 +123,7 @@ def save_posts(df: pd.DataFrame):
     Saves each dataframe row as a record using Django's get_or_create
     (object only saves if it doesn't already exist)
     """
+    logger.info('Savings posts to database')
     records = df.to_dict('records')
 
     for record in records:

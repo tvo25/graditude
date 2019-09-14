@@ -5,11 +5,11 @@
   "engines": {
     "node": "10.16.0"
   },
+  "scripts": {
+    "postinstall": "cd frontend && npm install",
+    "build": "cd frontend && npm run build"
+  },
   "cacheDirectories": [
     "frontend/node_modules"
-  ],
-  "scripts": {
-    "heroku-prebuild": "cd frontend && npm install",
-    "heroku-postbuild": "npm run build"
-  }
+  ]
 }
