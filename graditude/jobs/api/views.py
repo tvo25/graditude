@@ -1,14 +1,17 @@
+from django.db.models import Q
 from rest_framework import generics
 
-from ..models import Post
-from .serializers import PostSerializer
+from graditude.jobs.models import Post
+from graditude.jobs.api.serializers import PostSerializer
 
 
 class PostList(generics.ListAPIView):
-    queryset = Post.objects.exclude(date_added_db__isnull=True, location__isnull=True).select_related()
+    queryset = Post.objects.exclude(
+        Q(title__icontains='internship') | Q(title__icontains='intern')
+    ).select_related()
     serializer_class = PostSerializer
 
 
 class PostDetail(generics.RetrieveAPIView):
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().select_related()
     serializer_class = PostSerializer

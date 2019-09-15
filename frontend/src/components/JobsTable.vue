@@ -47,6 +47,10 @@
                 <b-table-column field='link' label="Source" width="100">
                     <p v-html="_linkify(props.row.link)"></p>
                 </b-table-column>
+
+                <b-table-column field='sponsored' label="Sponsored" width="100">
+                    <p v-html="_checkify(props.row.sponsored)"></p>
+                </b-table-column>
             </template>
 
         </b-table>
@@ -94,6 +98,19 @@
              * */
             _linkify: function (text) {
                 return text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">Link</a>');
+            },
+
+            /**
+             * Converts the true/false boolean representation
+             * to ✓/✗
+             * @param {String} val The boolean value for a field
+             * */
+            _checkify: function (val) {
+                if (val === true) {
+                    return "✓"
+                } else {
+                    return "✗"
+                }
             }
         },
         mounted() {

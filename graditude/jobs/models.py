@@ -37,4 +37,19 @@ class Post(models.Model):
     position = models.ForeignKey('Position', on_delete=models.SET_NULL, null=True)
 
     class Meta:
-        unique_together = (('company', 'title', 'date_posted'))
+        unique_together = (('company', 'title', 'date_posted',))
+
+    @property
+    def experience(self):
+        substring_list = ['intern', 'internship']
+        if any(substring in self.title.lower() for substring in substring_list):
+            return 'Internship'
+        else:
+            return 'Full-time'
+
+    @property
+    def sponsored(self):
+        if not self.date_added_db or not self.location:
+            return True
+        else:
+            return False
