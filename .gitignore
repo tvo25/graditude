@@ -36,6 +36,7 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
+docs/coverage_report/
 htmlcov/
 .tox/
 .coverage
@@ -339,7 +340,10 @@ graditude/media/
 .pytest_cache/
 
 
-.env
-.envs/*
-!.envs/.local/
+.env
+
+.envs/*
+
+!.envs/.local/
+
 .idea/inspectionProfiles/Project_Default.xml
