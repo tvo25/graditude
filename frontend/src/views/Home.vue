@@ -45,7 +45,7 @@
                         <p class="promo-caption">Searching, made simple</p>
                         <p class="light center">Graditude provides a simple, centralized database for new graduate
                             software engineers to land their next job. Curated using Indeed, our listings are updated
-                            twice a day, every day.
+                            twice an hour, every hour.
                         </p>
 
                     </div>
@@ -53,15 +53,15 @@
                         <figure class="image is-128x128 is-horizontal-center">
                             <img src="../assets/img/yoga.svg" alt="">
                         </figure>
-                        <p class="promo-caption">Ad-free, stress-free.</p>
+                        <p class="promo-caption">Ad-free, stress-free </p>
                         <p class="light center">Straight to the point, Graditude makes job-hunting stress-free by
-                            filtering out ads and displaying posts in a tabular format. The less clicks made, the more efficient time is spent.</p>
+                            filtering out ads and displaying posts in a tabular format. The less clicks made, the more efficient searching becomes.</p>
                     </div>
                     <div class="column is-one-third has-text-centered" data-aos="zoom-in">
                         <figure class="image is-128x128 is-horizontal-center">
                             <img src="../assets/img/support.svg" alt="">
                         </figure>
-                        <p class="promo-caption">Stay Motivated.</p>
+                        <p class="promo-caption">Stay Motivated </p>
                         <p class="light center">Job hunting for new graduates can be tough. Graditude's mission is to
                             encourage the growth of the next generation of professionals.
                         </p>
