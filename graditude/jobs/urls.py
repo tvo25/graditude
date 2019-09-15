@@ -7,6 +7,6 @@ from graditude.jobs.api.views import (
 
 app_name = "jobs"
 urlpatterns = [
-    path("posts/", view=PostList.as_view(), name="redirect"),
-    path("posts/<int:pk>/", view=PostDetail.as_view(), name="update"),
+    path("posts/", view=PostList.as_view(), name="list"),
+    path("posts/<int:pk>/", view=PostDetail.as_view(), name="detail"),
 ]

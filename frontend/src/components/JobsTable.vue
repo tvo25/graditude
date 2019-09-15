@@ -22,8 +22,6 @@
                  :default-sort="[sortField, sortOrder]"
                  @sort="onSort"
         >
-
-
             <template slot-scope="props">
                 <b-table-column field="date_posted" label="Date Posted" sortable centered>
                     {{ props.row.date_posted ? new Date(props.row.date_posted).toLocaleDateString() : '' }}
@@ -78,7 +76,7 @@
         methods: {
             getAllData: function () {
                 axios
-                    .get('/jobs/api/v1/posts/')
+                    .get('/api/v1/jobs/posts/')
                     .then(response => {
                         this.data = response.data
                         this.loading = false
