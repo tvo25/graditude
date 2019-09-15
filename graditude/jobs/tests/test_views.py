@@ -21,14 +21,12 @@ class TestJobsAPI:
     def test_list(self):
         list_url = reverse('jobs:list')
 
-        for i in range(100):
-            factories.PostFactory()
-        count = models.Post.objects.count()
+        posts = factories.PostFactory.create_batch(20)
 
         response = self.client.get(list_url)
 
         assert response.status_code == status.HTTP_200_OK
-        assert len(response.data) == count
+        assert len(response.data) == len(posts)
 
     def test_detail(self):
         post = factories.PostFactory()
