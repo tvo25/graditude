@@ -8,6 +8,7 @@ from graditude.jobs import models
 class CompanyFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Company
+        django_get_or_create = ('name',)
 
     name = factory.Faker('company')
 
@@ -15,6 +16,7 @@ class CompanyFactory(factory.django.DjangoModelFactory):
 class SourceFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Source
+        django_get_or_create = ('name',)
 
     name = 'LinkedIn'
     from_api = False
@@ -23,6 +25,7 @@ class SourceFactory(factory.django.DjangoModelFactory):
 class PostFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Post
+        django_get_or_create = ('title',)
 
     title = factory.Faker('job')
     company = factory.SubFactory(CompanyFactory)
