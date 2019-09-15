@@ -7,14 +7,14 @@ from graditude.jobs.tests import factories
 pytestmark = pytest.mark.django_db
 
 
-def test_list(user: settings.AUTH_USER_MODEL):
+def test_list():
     assert (
         reverse("jobs:list")
         == f"/api/v1/jobs/posts/"
     )
 
 
-def test_detail(user: settings.AUTH_USER_MODEL):
+def test_detail():
     post = factories.PostFactory()
 
     assert (
