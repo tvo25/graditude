@@ -22,6 +22,14 @@ class SourceFactory(factory.django.DjangoModelFactory):
     from_api = False
 
 
+class PositionFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Position
+        django_get_or_create = ('title',)
+
+    title = factory.Faker('job')
+
+
 class PostFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Post

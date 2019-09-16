@@ -45,11 +45,11 @@ class Post(models.Model):
         if any(substring in self.title.lower() for substring in substring_list):
             return 'Internship'
         else:
-            return 'Full-time'
+            return 'Full-Time'
 
     @property
     def sponsored(self):
-        if not self.date_added_db or not self.location:
+        if not self.date_posted or not self.location:
             return True
         else:
             return False
