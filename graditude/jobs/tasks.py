@@ -14,63 +14,10 @@ from graditude.jobs.models import Company, Position, Post
 logger = logging.getLogger(__name__)
 
 
-@celery_app.task()
-def scrape_indeed():
-    """
-    Performs the web scrapping process using BeautifulSoup4 and pandas
-    for data processing. The web page is fetched using the request
-    library. Each job posting on the page are stored as
-    'containers' with a class of 'row'. After fetching each container,
-    perform parsing the fields of a post.
-    """
-    logger.info('Executing scraper')
-
-    positions = Position.objects.all()
-    searches = [obj.search_str() for obj in positions]
-
-    pages = range(0, 1001, 10)
-    fields = [f.name for f in Post._meta.get_fields()]
-    df = pd.DataFrame(columns=fields)
-
-    for search in searches:
-        for page in pages:
-            page_html = requests.get(
-                f"https://www.indeed.com/jobs?q={search}&sort=date&l=California&explvl=entry_level&sort=date&start={page}"
-            )
-
-            soup = bs(page_html.content, "html.parser")
-            post_container = soup.findAll("div", {"class": "row"})
-
-            df = parse_container(post_container, df)
-
-    df = parse_postings(df)
-
-    save_posts(df)
-
-
-def parse_container(containers: List[str], df: pd.DataFrame) -> pd.DataFrame:
-    """ Parses the containers for the specified fields """
-    today = date.today()
-    span_fields = {'company', 'location', 'date'}
-
-    for container in containers:
-        post_href = container.find('a', {'class': 'jobtitle'})['href']
-
-        fields = {f: find_span(container, 'span', f) for f in span_fields}
-        fields.update({'date_posted': parse_date(fields['date'], today),
-                       'title': container.a.text,
-                       'date_added_db': today,
-                       'description': find_span(container, "div", class_='summary'),
-                       'source': 1,
-                       'link': f'https://indeed.com/{post_href}'})
-        fields['is_sponsored'] = True if fields["date_posted"] else False,
-
-        df = df.append(fields, ignore_index=True)
-
-    return df
-
-
-def parse_date(date_posted: str, today: date.today) -> Union[date, None]:
+def parse_date(
+    date_posted: str,
+    today: date.today
+) -> Union[date, None]:
     """
     Parses the date field based to return the correct value.
     if the value is 'Just Posted' or 'Today', set day = 0.
@@ -86,7 +33,11 @@ def parse_date(date_posted: str, today: date.today) -> Union[date, None]:
     return today - timedelta(days=days_ago)
 
 
-def find_span(container: str, tag: str, class_: str) -> Union[str, None]:
+def find_span(
+    container: str,
+    tag: str,
+    class_: str
+) -> Union[str, None]:
     """
     Receives the job post container, and searches the tag for the
     specified value.
@@ -98,49 +49,106 @@ def find_span(container: str, tag: str, class_: str) -> Union[str, None]:
     return found.text.strip()
 
 
-def parse_postings(df: pd.DataFrame) -> pd.DataFrame:
+class IndeedScraper:
+    def __init__(self):
+        # The search queries to be used in requests
+        positions = Position.objects.all()  # type: List[Position]
+        self.search_queries = [obj.search_str() for obj in positions]  # type: List[str]
+
+        # Stores the posts
+        self.fields = [f.name for f in Post._meta.get_fields()]  # type: List[str]
+        self.df = pd.DataFrame(columns=self.fields)  # type: pd.DataFrame
+
+    def scrape(self):
+        logger.info('Executing scraper')
+
+        pages = range(0, 1001, 10)
+
+        for query in self.search_queries:
+            for page in pages:
+                page_html = requests.get(
+                    f"https://www.indeed.com/jobs?q={query}&sort=date&l=California&explvl=entry_level&sort=date&start={page}"
+                )
+                soup = bs(page_html.content, "html.parser")
+                post_container = soup.findAll("div", {"class": "row"})
+                self.parse_container(post_container)
+
+        self.parse_posts()
+
+    def parse_container(self, containers: List[str]):
+        """ Parses the containers for the specified fields """
+        today = date.today()
+        span_fields = {'company', 'location', 'date'}
+
+        for container in containers:
+            post_href = container.find('a', {'class': 'jobtitle'})['href']
+
+            fields = {f: find_span(container, 'span', f) for f in span_fields}
+            fields.update({'date_posted': parse_date(fields['date'], today),
+                           'title': container.a.text,
+                           'date_added_db': today,
+                           'description': find_span(container, "div", class_='summary'),
+                           'source': 1,
+                           'link': f'https://indeed.com/{post_href}'})
+            fields['is_sponsored'] = True if fields["date_posted"] else False,
+
+            self.df = self.df.append(fields, ignore_index=True)
+
+    def parse_posts(self):
+        """
+         Parses the dataframe containing all of the job posts. The first
+         step is to remove companies that are spam, which is mainly
+         'Indeed Prime'. Afterwards, duplicate entries are dropped based
+         on the 'company', 'date_posted', and 'title' fields. Often times
+         there are multiple of the same job posting listed on different days
+         which is not useful to search through for the end-user.
+         """
+        logger.info('Parsing posts')
+
+        self.df.title = self.df.title.str.strip()
+
+        spam_companies = ['Indeed Prime']
+        self.df = self.df[~self.df['company'].isin(spam_companies)]
+        self.df = self.df.dropna(subset=['company'])
+        self.df = self.df.drop_duplicates(subset=['company', 'date_posted', 'title'])
+
+    def save_posts(self):
+        """
+        Saves each dataframe row as a record using Django's get_or_create
+        (object only saves if it doesn't already exist)
+        """
+        logger.info('Savings posts to database')
+        records = self.df.to_dict('records')
+
+        for record in records:
+            Company.objects.get_or_create(
+                name=record['company'])
+
+            Post.objects.get_or_create(
+                title=record['title'],
+                company_id=record['company'],
+                defaults={
+                    'date_posted': record['date_posted'],
+                    'description': record['description'],
+                    'location': record['location'],
+                    'is_sponsored': False,
+                    'date_added_db': record['date_added_db'],
+                    'source_id': record['source'],
+                    'link': record['link'],
+                }
+
+            )
+
+
+@celery_app.task()
+def scrape_indeed():
     """
-     Parses the dataframe containing all of the job posts. The first
-     step is to remove companies that are spam, which is mainly
-     'Indeed Prime'. Afterwards, duplicate entries are dropped based
-     on the 'company', 'date_posted', and 'title' fields. Often times
-     there are multiple of the same job posting listed on different days
-     which is not useful to search through for the end-user.
-     """
-    logger.info('Parsing posts')
-
-    df.title = df.title.str.strip()
-
-    spam_companies = ['Indeed Prime']
-    df = df[~df['company'].isin(spam_companies)]
-    df = df.dropna(subset=['company'])
-    df = df.drop_duplicates(subset=['company', 'date_posted', 'title'])
-    return df
-
-
-def save_posts(df: pd.DataFrame):
+    Performs the web scrapping process using BeautifulSoup4 and pandas
+    for data processing. The web page is fetched using the request
+    library. Each job posting on the page are stored as
+    'containers' with a class of 'row'. After fetching each container,
+    perform parsing the fields of a post.
     """
-    Saves each dataframe row as a record using Django's get_or_create
-    (object only saves if it doesn't already exist)
-    """
-    logger.info('Savings posts to database')
-    records = df.to_dict('records')
-
-    for record in records:
-        Company.objects.get_or_create(
-            name=record['company'])
-
-        Post.objects.get_or_create(
-            title=record['title'],
-            company_id=record['company'],
-            defaults={
-                'date_posted': record['date_posted'],
-                'description': record['description'],
-                'location': record['location'],
-                'is_sponsored': False,
-                'date_added_db': record['date_added_db'],
-                'source_id': record['source'],
-                'link': record['link'],
-            }
-
-        )
+    scraper = IndeedScraper()
+    scraper.scrape()
+    scraper.save_posts()
