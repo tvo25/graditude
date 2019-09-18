@@ -2,6 +2,7 @@
     <div id="JobsTable">
         <b-field grouped group-multiline>
             <b-select v-model="perPage" :disabled="!isPaginated">
+                <option value="5">5 per page</option>
                 <option value="10">10 per page</option>
                 <option value="15">15 per page</option>
                 <option value="20">20 per page</option>
@@ -17,13 +18,15 @@
                  :pagination-simple="isPaginationSimple"
                  :pagination-position="paginationPosition"
 
-                 backend-sorting
-                 :default-sort-direction="defaultSortOrder"
-                 :default-sort="[sortField, sortOrder]"
-                 @sort="onSort"
+                 :default-sort-direction="defaultSortDirection"
+
+                 aria-next-label="Next page"
+                 aria-previous-label="Previous page"
+                 aria-page-label="Page"
+                 aria-current-label="Current page"
         >
             <template slot-scope="props">
-                <b-table-column field="date_posted" label="Date Posted" sortable centered>
+                <b-table-column field="date_posted" label="Date Posted" width="125" sortable centered>
                     {{ props.row.date_posted ? new Date(props.row.date_posted).toLocaleDateString() : '' }}
                 </b-table-column>
 
@@ -38,7 +41,7 @@
                     {{ props.row.location }}
                 </b-table-column>
 
-                <b-table-column field="description" label="Description" sortable>
+                <b-table-column field="description" label="Description" width="400" sortable>
                     {{ props.row.description }}
                 </b-table-column>
 
@@ -65,8 +68,9 @@
                 data: [],
                 loading: true,
                 isPaginated: true,
-                isPaginationSimple: false,
-                paginationPosition: 'bottom',
+                isPaginationSimple: true,
+                paginationPosition: 'both',
+                defaultSortDirection: 'asc',
                 currentPage: 1,
                 perPage: 10
 
