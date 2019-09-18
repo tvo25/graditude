@@ -14,6 +14,20 @@ from graditude.jobs.models import Company, Position, Post
 logger = logging.getLogger(__name__)
 
 
+@celery_app.task()
+def scrape_indeed(pages: List[int] = None):
+    """
+    Performs the web scrapping process using BeautifulSoup4 and pandas
+    for data processing. The web page is fetched using the request
+    library. Each job posting on the page are stored as
+    'containers' with a class of 'row'. After fetching each container,
+    perform parsing the fields of a post.
+    """
+    scraper = IndeedScraper(pages=pages)
+    scraper.scrape()
+    scraper.save_posts()
+
+
 def parse_date(
     date_posted: str,
     today: date.today
@@ -50,10 +64,13 @@ def find_span(
 
 
 class IndeedScraper:
-    def __init__(self):
+    def __init__(self, pages=None):
         # The search queries to be used in requests
         positions = Position.objects.all()  # type: List[Position]
         self.search_queries = [obj.search_str() for obj in positions]  # type: List[str]
+
+        # Every page contains 10 posts, so itereate in counts of 10
+        self.pages = pages if pages else range(0, 1001, 10)
 
         # Stores the posts
         self.fields = [f.name for f in Post._meta.get_fields()]  # type: List[str]
@@ -62,10 +79,8 @@ class IndeedScraper:
     def scrape(self):
         logger.info('Executing scraper')
 
-        pages = range(0, 1001, 10)
-
         for query in self.search_queries:
-            for page in pages:
+            for page in self.pages:
                 page_html = requests.get(
                     f"https://www.indeed.com/jobs?q={query}&sort=date&l=California&explvl=entry_level&sort=date&start={page}"
                 )
@@ -76,7 +91,10 @@ class IndeedScraper:
         self.parse_posts()
 
     def parse_container(self, containers: List[str]):
-        """ Parses the containers for the specified fields """
+        """
+        Parses the containers for the specified fields
+        TODO: Make ID not equal to 1 for the source
+        """
         today = date.today()
         span_fields = {'company', 'location', 'date'}
 
@@ -138,17 +156,3 @@ class IndeedScraper:
                 }
 
             )
-
-
-@celery_app.task()
-def scrape_indeed():
-    """
-    Performs the web scrapping process using BeautifulSoup4 and pandas
-    for data processing. The web page is fetched using the request
-    library. Each job posting on the page are stored as
-    'containers' with a class of 'row'. After fetching each container,
-    perform parsing the fields of a post.
-    """
-    scraper = IndeedScraper()
-    scraper.scrape()
-    scraper.save_posts()
