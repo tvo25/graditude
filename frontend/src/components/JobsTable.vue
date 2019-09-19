@@ -19,6 +19,7 @@
                  :pagination-position="paginationPosition"
 
                  :default-sort-direction="defaultSortDirection"
+                 default-sort="date_posted"
 
                  aria-next-label="Next page"
                  aria-previous-label="Previous page"
@@ -70,7 +71,7 @@
                 isPaginated: true,
                 isPaginationSimple: true,
                 paginationPosition: 'both',
-                defaultSortDirection: 'asc',
+                defaultSortDirection: 'desc',
                 currentPage: 1,
                 perPage: 10
 
