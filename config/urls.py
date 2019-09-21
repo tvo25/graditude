@@ -4,6 +4,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
+from rest_framework.authtoken import views
+
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="index.html"), name="app"),
@@ -15,8 +17,10 @@ urlpatterns = [
     # User management
     path("users/", include("graditude.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
+    path("api-token-auth/", views.obtain_auth_token),
     # Your stuff: custom urls includes go here
-    path("api/v1/jobs/", include('graditude.jobs.urls', namespace='jobs'))
+    path("api/v1/jobs/", include('graditude.jobs.urls', namespace='jobs')),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
