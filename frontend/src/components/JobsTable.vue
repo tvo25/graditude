@@ -8,8 +8,45 @@
                 <option value="20">20 per page</option>
             </b-select>
         </b-field>
+        <b-field label="Select a date">
+            <b-datepicker
+                    placeholder="Click to select..."
+                    v-model="dates"
+                    range>
+            </b-datepicker>
+        </b-field>
+
+        <form @submit.prevent="addFilter">
+            <b-field grouped>
+
+                <b-select v-model="filteredProperty">
+                    <option value="company">Company</option>
+                    <option value="location">Location</option>
+                    <option value="title">Title</option>
+                    <option value="description">Description</option>
+                </b-select>
+                <b-input placeholder="search" v-model="query" v-on:keyup.enter="submit"></b-input>
+                <b-button type="'is-info" @click="addFilter">Filter</b-button>
+
+            </b-field>
+        </form>
+        <table v-if="activeFilters.length">
+            <tr style="width: 100px">
+                <th colspan="3">Filters in use:</th>
+            </tr>
+            <tr v-for="(filter, index) in activeFilters" :key="index">
+                <td>{{ filter.name }}:</td>
+                <td>{{ filter.value }}</td>
+                <td style="padding-left: 10px;">
+                    <a @click.prevented=removeFilter(index)>
+                        remove
+                    </a>
+                </td>
+            </tr>
+        </table>
+
         <b-table id="jobs-table"
-                 :data="data"
+                 :data="filtered"
                  :loading="loading"
 
                  :paginated="isPaginated"
@@ -27,8 +64,8 @@
                  aria-current-label="Current page"
         >
             <template slot-scope="props">
-                <b-table-column field="date_posted" label="Date Posted" width="125" sortable centered>
-                    {{ props.row.date_posted ? new Date(props.row.date_posted).toLocaleDateString() : '' }}
+                <b-table-column field="date_posted" label="Date Posted" width="150" sortable centered>
+                    {{ props.row.date_posted | moment }}
                 </b-table-column>
 
                 <b-table-column field="title" label="Title" width="300" sortable>
@@ -61,6 +98,7 @@
 
 <script>
     import axios from 'axios'
+    import moment from 'moment'
 
     export default {
         name: "JobsTable",
@@ -73,8 +111,13 @@
                 paginationPosition: 'both',
                 defaultSortDirection: 'desc',
                 currentPage: 1,
-                perPage: 10
+                perPage: 10,
 
+                // Parameters to query the table
+                filteredProperty: 'company',
+                query: '',
+                activeFilters: [],
+                dates: []
 
             }
         },
@@ -104,8 +147,7 @@
             },
 
             /**
-             * Converts the true/false boolean representation
-             * to ✓/✗
+             * Converts the true/false boolean representation to ✓/✗
              * @param {String} val The boolean value for a field
              * */
             _checkify: function (val) {
@@ -114,11 +156,64 @@
                 } else {
                     return "✗"
                 }
+            },
+            /**
+             * Adds filters to the activeFilters array
+             */
+            addFilter: function () {
+                this.activeFilters.push({
+                    name: this.filteredProperty,
+                    value: this.query
+                })
+                this.query = ''
+            },
+            /**
+             * Removes filters from the activeFilters array
+             * @param idx
+             */
+            removeFilter: function (idx) {
+                this.activeFilters.splice(idx, 1)
             }
         },
         mounted() {
             this.getAllData()
 
+        },
+        computed: {
+            /**
+             * Filters the data array of objects based on date and filtering parameters
+             * @returns {[]}
+             */
+            filtered() {
+                let filtered = this.data
+
+                // Filter objects by 'date_posted' field if a date range filter is selected
+                if (this.dates.length > 0) {
+                    filtered = filtered.filter(record => {
+                        return moment(record['date_posted']).isBetween(this.dates[0], this.dates[1], null, '[]')
+                    })
+                }
+
+
+                this.activeFilters.forEach(filter => {
+                    filtered = filtered.filter(record => {
+                        return filter.name === 'title'
+                            ? new RegExp(filter.value, 'i').test(record[filter.name])
+                            : record[filter.name] === filter.value
+                    })
+                })
+                return filtered
+            }
+        },
+        filters: {
+            /**
+             * Format the JSON date returned by the API into the specified format
+             * @param date
+             * @returns {string}
+             */
+            moment: function (date) {
+                return moment(date).format('MM/DD/YY')
+            }
         }
     };
 </script>
