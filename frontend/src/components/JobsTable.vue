@@ -8,42 +8,51 @@
                 <option value="20">20 per page</option>
             </b-select>
         </b-field>
-        <b-field label="Select a date">
-            <b-datepicker
-                    placeholder="Click to select..."
-                    v-model="dates"
-                    range>
-            </b-datepicker>
-        </b-field>
 
         <form @submit.prevent="addFilter">
             <b-field grouped>
-
-                <b-select v-model="filteredProperty">
-                    <option value="company">Company</option>
-                    <option value="location">Location</option>
-                    <option value="title">Title</option>
-                    <option value="description">Description</option>
-                </b-select>
-                <b-input placeholder="search" v-model="query" v-on:keyup.enter="submit"></b-input>
-                <b-button type="'is-info" @click="addFilter">Filter</b-button>
+                <b-datepicker
+                        placeholder="Click to select..."
+                        v-model="dates"
+                        icon="calendar-today"
+                        range
+                >
+                </b-datepicker>
+                <b-field>
+                    <b-select placeholder="Filters" v-model="filteredProperty">
+                        <option value="company">Company</option>
+                        <option value="location">Location</option>
+                        <option value="title">Title</option>
+                        <option value="description">Description</option>
+                    </b-select>
+                    <b-input icon="magnify" type="search" placeholder="Search..." v-model="query"
+                             v-on:keyup.enter="submit"></b-input>
+                    <p class="control">
+                        <button class="button">Apply</button>
+                    </p>
+                </b-field>
 
             </b-field>
         </form>
-        <table v-if="activeFilters.length">
-            <tr style="width: 100px">
-                <th colspan="3">Filters in use:</th>
+        <table class="table" v-if="activeFilters.length">
+            <thead>
+            <tr>
+                <th>Filter</th>
+                <th>Search</th>
+
             </tr>
             <tr v-for="(filter, index) in activeFilters" :key="index">
                 <td>{{ filter.name }}:</td>
                 <td>{{ filter.value }}</td>
-                <td style="padding-left: 10px;">
+                <td>
                     <a @click.prevented=removeFilter(index)>
-                        remove
+                        Remove
                     </a>
                 </td>
             </tr>
+            </thead>
         </table>
+
 
         <b-table id="jobs-table"
                  :data="filtered"
@@ -194,10 +203,9 @@
                     })
                 }
 
-
                 this.activeFilters.forEach(filter => {
                     filtered = filtered.filter(record => {
-                        return filter.name === 'title'
+                        return filter.name.includes('title')
                             ? new RegExp(filter.value, 'i').test(record[filter.name])
                             : record[filter.name] === filter.value
                     })
