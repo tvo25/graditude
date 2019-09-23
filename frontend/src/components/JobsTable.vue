@@ -1,5 +1,6 @@
 <template>
     <div id="JobsTable">
+
         <b-field grouped group-multiline>
             <b-select v-model="perPage" :disabled="!isPaginated">
                 <option value="5">5 per page</option>
@@ -9,8 +10,8 @@
             </b-select>
         </b-field>
 
-        <form @submit.prevent="addFilter">
-            <b-field grouped>
+        <b-field grouped group-multiline>
+            <b-field>
                 <b-datepicker
                         placeholder="Click to select..."
                         v-model="dates"
@@ -18,6 +19,8 @@
                         range
                 >
                 </b-datepicker>
+            </b-field>
+            <form @submit.prevent="addFilter">
                 <b-field>
                     <b-select placeholder="Filters" v-model="filteredProperty">
                         <option value="company">Company</option>
@@ -31,9 +34,8 @@
                         <button class="button">Apply</button>
                     </p>
                 </b-field>
-
-            </b-field>
-        </form>
+            </form>
+        </b-field>
         <table class="table" v-if="activeFilters.length">
             <thead>
             <tr>
@@ -117,7 +119,7 @@
                 loading: true,
                 isPaginated: true,
                 isPaginationSimple: true,
-                paginationPosition: 'both',
+                paginationPosition: 'bottom',
                 defaultSortDirection: 'desc',
                 currentPage: 1,
                 perPage: 10,
@@ -225,3 +227,9 @@
         }
     };
 </script>
+
+<style>
+    #jobs-table {
+        margin-top: 3%;
+    }
+</style>
