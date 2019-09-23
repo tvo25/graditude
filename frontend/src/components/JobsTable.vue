@@ -79,7 +79,7 @@
                     {{ props.row.date_posted | moment }}
                 </b-table-column>
 
-                <b-table-column field="title" label="Title" width="300" sortable>
+                <b-table-column field="title" label="Title" width="250" sortable>
                     {{ props.row.title }}
                 </b-table-column>
 
@@ -90,7 +90,7 @@
                     {{ props.row.location }}
                 </b-table-column>
 
-                <b-table-column field="description" label="Description" width="400" sortable>
+                <b-table-column field="description" label="Description" width="450" sortable>
                     {{ props.row.description }}
                 </b-table-column>
 
@@ -119,7 +119,7 @@
                 loading: true,
                 isPaginated: true,
                 isPaginationSimple: true,
-                paginationPosition: 'bottom',
+                paginationPosition: 'both',
                 defaultSortDirection: 'desc',
                 currentPage: 1,
                 perPage: 10,
