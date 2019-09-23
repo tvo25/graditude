@@ -20,11 +20,14 @@
     h3,
     h4,
     h5,
-    h6 {
+    h6,
+    th,
+    label {
         font-family: "Raleway", sans-serif;
     }
 
-    p {
+    p,
+    td {
         font-family: "Lato", sans-serif;
     }
 </style>
