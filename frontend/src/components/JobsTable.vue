@@ -232,4 +232,9 @@
     #jobs-table {
         margin-top: 3%;
     }
+
+    #jobs-table td {
+        word-break: break-all;
+
+    }
 </style>
