@@ -59,7 +59,8 @@
         <b-table id="jobs-table"
                  :data="filtered"
                  :loading="loading"
-
+                 :focusable="isFocusable"
+                 :narrowed="isNarrowed"
                  :paginated="isPaginated"
                  :per-page="perPage"
                  :current-page.sync="currentPage"
@@ -91,7 +92,7 @@
                 </b-table-column>
 
                 <b-table-column field="description" label="Description" width="450" sortable>
-                    {{ props.row.description }}
+                    {{ props.row.description | truncate }}
                 </b-table-column>
 
                 <b-table-column field='link' label="Source" width="100">
@@ -117,6 +118,9 @@
             return {
                 data: [],
                 loading: true,
+                isFocusable: true,
+                isNarrowed: true,
+
                 isPaginated: true,
                 isPaginationSimple: true,
                 paginationPosition: 'both',
@@ -223,6 +227,16 @@
              */
             moment: function (date) {
                 return moment(date).format('MM/DD/YY')
+            },
+            /**
+             * Limit the description to the specified length
+             * @param desc
+             * @returns {string}
+             */
+
+            truncate: function (desc) {
+                return desc.length < 360 ? desc : desc.substring(0, 360) + '...'
+
             }
         }
     };
@@ -233,8 +247,5 @@
         margin-top: 3%;
     }
 
-    #jobs-table td {
-        word-break: break-all;
 
-    }
 </style>
