@@ -1,8 +1,9 @@
-pytz==2019.2  # https://github.com/stub42/pytz
+
 python-slugify==3.0.6  # https://github.com/un33k/python-slugify
+pytz==2019.3  # https://github.com/stub42/pytz
 Pillow==6.2.0  # https://github.com/python-pillow/Pillow
 argon2-cffi==19.1.0  # https://github.com/hynek/argon2_cffi
-redis==3.3.8  # https://github.com/antirez/redis
+redis==3.3.10  # https://github.com/antirez/redis
 celery==4.3.0  # pyup: < 5.0  # https://github.com/celery/celery
 django-celery-beat==1.5.0  # https://github.com/celery/django-celery-beat
 django-celery-results==1.1.2
@@ -33,7 +34,7 @@ pandas==0.25.1
 numpy==1.17.2
 requests==2.22.0
 requests-oauthlib==1.2.0
-beautifulsoup4==4.8.0
+beautifulsoup4==4.8.1
 tqdm==4.36.1
 
 
