@@ -1,8 +1,9 @@
-pytz==2019.2  # https://github.com/stub42/pytz
-python-slugify==3.0.4  # https://github.com/un33k/python-slugify
+
+python-slugify==3.0.6  # https://github.com/un33k/python-slugify
+pytz==2019.3  # https://github.com/stub42/pytz
 Pillow==6.2.0  # https://github.com/python-pillow/Pillow
 argon2-cffi==19.1.0  # https://github.com/hynek/argon2_cffi
-redis==3.3.8  # https://github.com/antirez/redis
+redis==3.3.11  # https://github.com/antirez/redis
 celery==4.3.0  # pyup: < 5.0  # https://github.com/celery/celery
 django-celery-beat==1.5.0  # https://github.com/celery/django-celery-beat
 django-celery-results==1.1.2  # https://github.com/celery/django-celery-results
@@ -27,7 +28,7 @@ django-cors-headers==3.1.1  # https://github.com/ottoyiu/django-cors-headers
 
 # Additional
 # ------------------------------------------------------------------------------
-beautifulsoup4==4.8.0  # https://www.crummy.com/software/BeautifulSoup/
+beautifulsoup4==4.8.1  # https://www.crummy.com/software/BeautifulSoup/
 numpy==1.17.2  # https://github.com/numpy/numpy
 pandas==0.25.1  # https://github.com/pandas-dev/pandas
 requests==2.22.0  # https://github.com/psf/requests
