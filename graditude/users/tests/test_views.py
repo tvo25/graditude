@@ -1,52 +1,68 @@
 import pytest
-from django.conf import settings
-from django.test import RequestFactory
+from factory import Faker
+from rest_framework import status
+from rest_framework.test import APIClient
 
-from graditude.users.views import UserRedirectView, UserUpdateView
+from django.urls import reverse
+from django.forms.models import model_to_dict
+
+from graditude.users.models import User
+from graditude.users.tests.factories import UserFactory
 
 pytestmark = pytest.mark.django_db
 
 
-class TestUserUpdateView:
-    """
-    TODO:
-        extracting view initialization code as class-scoped fixture
-        would be great if only pytest-django supported non-function-scoped
-        fixture db access -- this is a work-in-progress for now:
-        https://github.com/pytest-dev/pytest-django/pull/258
-    """
+class TestUserDetail:
+    @pytest.fixture(autouse=True)
+    def setUp(self):
+        self.client = APIClient()
+        self.user = UserFactory()
+        self.url = reverse('user-detail', kwargs={"uuid": self.user.uuid})
 
-    def test_get_success_url(
-        self, user: settings.AUTH_USER_MODEL, request_factory: RequestFactory
-    ):
-        view = UserUpdateView()
-        request = request_factory.get("/fake-url/")
-        request.user = user
+        self.new_first_name = "Tom"
+        self.payload = {'first_name': self.new_first_name}
 
-        view.request = request
+    def test_get_user(self):
+        response = self.client.get(self.url)
+        assert response.status_code == status.HTTP_200_OK
 
-        assert view.get_success_url() == f"/users/{user.username}/"
+    def test_put_update_user_unauthorized(self):
+        response = self.client.put(self.url, self.payload)
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
-    def test_get_object(
-        self, user: settings.AUTH_USER_MODEL, request_factory: RequestFactory
-    ):
-        view = UserUpdateView()
-        request = request_factory.get("/fake-url/")
-        request.user = user
+        user = User.objects.get(pk=self.user.id)
+        assert user.first_name != self.new_first_name
 
-        view.request = request
+    def test_put_update_user_authorized(self):
+        # Include an appropriate `Authorization:` header on all requests.
+        self.client.credentials(HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
 
-        assert view.get_object() == user
+        response = self.client.put(self.url, self.payload)
+        assert response.status_code == status.HTTP_200_OK
+
+        user = User.objects.get(pk=self.user.id)
+        assert user.first_name == self.new_first_name
 
 
-class TestUserRedirectView:
-    def test_get_redirect_url(
-        self, user: settings.AUTH_USER_MODEL, request_factory: RequestFactory
-    ):
-        view = UserRedirectView()
-        request = request_factory.get("/fake-url")
-        request.user = user
+class TestUserCreateViewSet:
+    @pytest.fixture(autouse=True)
+    def setup(self, client):
+        self.client = APIClient()
+        self.url = reverse('user-list')
+        self.user_data = model_to_dict(UserFactory.build())
 
-        view.request = request
+        # Fields set as None, which cannot be serialized as JSON
+        self.user_data.pop('id')
+        self.user_data.pop('last_login')
 
-        assert view.get_redirect_url() == f"/users/{user.username}/"
+    def test_post_invalid_fail(self):
+        response = self.client.post(self.url, {})
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+    def test_post_valid_success(self):
+        response = self.client.post(self.url, self.user_data)
+        assert response.status_code == status.HTTP_201_CREATED
+
+        user = User.objects.get(pk=response.data.get('id'))
+        assert user.username == self.user_data.get("username")
+        assert user.check_password(self.user_data.get("password")) is True

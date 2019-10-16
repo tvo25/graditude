@@ -1,11 +1,11 @@
 .. image:: frontend/src/assets/img/logo.png
     :align: center
 
-.. image:: https://travis-ci.com/tvo25/graditude.svg?branch=master
-    :target: https://travis-ci.com/tvo25/graditude
+.. image:: https://travis-ci.com/tomvothecoder/graditude.svg?branch=master
+    :target: https://travis-ci.com/tomvothecoder/graditude
 
-.. image:: https://codecov.io/gh/tvo25/graditude/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/tvo25/graditude
+.. image:: https://codecov.io/gh/tomvothecoder/graditude/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/tomvothecoder/graditude
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
      :target: https://github.com/ambv/black
