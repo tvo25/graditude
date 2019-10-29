@@ -15,7 +15,7 @@ pytest-django==3.5.1  # https://github.com/pytest-dev/pytest-django
 
 # Code quality
 # ------------------------------------------------------------------------------
-flake8==3.7.8  # https://github.com/PyCQA/flake8
+flake8==3.7.9  # https://github.com/PyCQA/flake8
 coverage==4.5.4  # https://github.com/nedbat/coveragepy
 codecov==2.0.15  # https://github.com/codecov/codecov-python
 black==19.3b0  # https://github.com/ambv/black
