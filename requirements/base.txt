@@ -33,4 +33,4 @@ numpy==1.17.2  # https://github.com/numpy/numpy
 pandas==0.25.1  # https://github.com/pandas-dev/pandas
 requests==2.22.0  # https://github.com/psf/requests
 requests-oauthlib==1.2.0  # https://github.com/requests/requests-oauthlib
-tqdm==4.36.1  # https://github.com/tqdm/tqdm
+tqdm==4.38.0  # https://github.com/tqdm/tqdm
