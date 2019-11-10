@@ -28,10 +28,7 @@ def scrape_indeed(pages: List[int] = None):
     scraper.save_posts()
 
 
-def parse_date(
-    date_posted: str,
-    today: date.today
-) -> Union[date, None]:
+def parse_date(date_posted: str, today: date.today) -> Union[date, None]:
     """
     Parses the date field based to return the correct value.
     if the value is 'Just Posted' or 'Today', set day = 0.
@@ -39,7 +36,7 @@ def parse_date(
     if not date_posted:
         return None
 
-    if date_posted in {'Just posted', 'Today'}:
+    if date_posted in {"Just posted", "Today"}:
         days_ago = 0
     else:
         days_ago = int(date_posted[0]) if date_posted else 0
@@ -47,11 +44,7 @@ def parse_date(
     return today - timedelta(days=days_ago)
 
 
-def find_span(
-    container: str,
-    tag: str,
-    class_: str
-) -> Union[str, None]:
+def find_span(container: str, tag: str, class_: str) -> Union[str, None]:
     """
     Receives the job post container, and searches the tag for the
     specified value.
@@ -77,7 +70,7 @@ class IndeedScraper:
         self.df = pd.DataFrame(columns=self.fields)  # type: pd.DataFrame
 
     def scrape(self):
-        logger.info('Executing scraper')
+        logger.info("Executing scraper")
 
         for query in self.search_queries:
             for page in self.pages:
@@ -96,19 +89,23 @@ class IndeedScraper:
         TODO: Make ID not equal to 1 for the source
         """
         today = date.today()
-        span_fields = {'company', 'location', 'date'}
+        span_fields = {"company", "location", "date"}
 
         for container in containers:
-            post_href = container.find('a', {'class': 'jobtitle'})['href']
+            post_href = container.find("a", {"class": "jobtitle"})["href"]
 
-            fields = {f: find_span(container, 'span', f) for f in span_fields}
-            fields.update({'date_posted': parse_date(fields['date'], today),
-                           'title': container.a.text,
-                           'date_added_db': today,
-                           'description': find_span(container, "div", class_='summary'),
-                           'source': 1,
-                           'link': f'https://indeed.com/{post_href}'})
-            fields['is_sponsored'] = True if fields["date_posted"] else False,
+            fields = {f: find_span(container, "span", f) for f in span_fields}
+            fields.update(
+                {
+                    "date_posted": parse_date(fields["date"], today),
+                    "title": container.a.text,
+                    "date_added_db": today,
+                    "description": find_span(container, "div", class_="summary"),
+                    "source": 1,
+                    "link": f"https://indeed.com/{post_href}",
+                }
+            )
+            fields["is_sponsored"] = (True if fields["date_posted"] else False,)
 
             self.df = self.df.append(fields, ignore_index=True)
 
@@ -121,38 +118,36 @@ class IndeedScraper:
          there are multiple of the same job posting listed on different days
          which is not useful to search through for the end-user.
          """
-        logger.info('Parsing posts')
+        logger.info("Parsing posts")
 
         self.df.title = self.df.title.str.strip()
 
-        spam_companies = ['Indeed Prime']
-        self.df = self.df[~self.df['company'].isin(spam_companies)]
-        self.df = self.df.dropna(subset=['company'])
-        self.df = self.df.drop_duplicates(subset=['company', 'date_posted', 'title'])
+        spam_companies = ["Indeed Prime"]
+        self.df = self.df[~self.df["company"].isin(spam_companies)]
+        self.df = self.df.dropna(subset=["company"])
+        self.df = self.df.drop_duplicates(subset=["company", "date_posted", "title"])
 
     def save_posts(self):
         """
         Saves each dataframe row as a record using Django's get_or_create
         (object only saves if it doesn't already exist)
         """
-        logger.info('Savings posts to database')
-        records = self.df.to_dict('records')
+        logger.info("Savings posts to database")
+        records = self.df.to_dict("records")
 
         for record in records:
-            Company.objects.get_or_create(
-                name=record['company'])
+            Company.objects.get_or_create(name=record["company"])
 
             Post.objects.get_or_create(
-                title=record['title'],
-                company_id=record['company'],
+                title=record["title"],
+                company_id=record["company"],
                 defaults={
-                    'date_posted': record['date_posted'],
-                    'description': record['description'],
-                    'location': record['location'],
-                    'is_sponsored': False,
-                    'date_added_db': record['date_added_db'],
-                    'source_id': record['source'],
-                    'link': record['link'],
-                }
-
+                    "date_posted": record["date_posted"],
+                    "description": record["description"],
+                    "location": record["location"],
+                    "is_sponsored": False,
+                    "date_added_db": record["date_added_db"],
+                    "source_id": record["source"],
+                    "link": record["link"],
+                },
             )
