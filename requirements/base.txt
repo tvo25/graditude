@@ -1,8 +1,8 @@
 
-python-slugify==3.0.6  # https://github.com/un33k/python-slugify
+python-slugify==4.0.0  # https://github.com/un33k/python-slugify
 pytz==2019.3  # https://github.com/stub42/pytz
-Pillow==6.2.0  # https://github.com/python-pillow/Pillow
-argon2-cffi==19.1.0  # https://github.com/hynek/argon2_cffi
+Pillow==6.2.1  # https://github.com/python-pillow/Pillow
+argon2-cffi==19.2.0  # https://github.com/hynek/argon2_cffi
 redis==3.3.11  # https://github.com/antirez/redis
 celery==4.3.0  # pyup: < 5.0  # https://github.com/celery/celery
 django-celery-beat==1.5.0  # https://github.com/celery/django-celery-beat
@@ -11,12 +11,12 @@ whitenoise==4.1.4  # https://github.com/evansd/whitenoise
 
 # Django
 # ------------------------------------------------------------------------------
-django==2.2.6  # pyup: < 3.0  # https://www.djangoproject.com/
+django==2.2.7  # pyup: < 3.0  # https://www.djangoproject.com/
 django-environ==0.4.5  # https://github.com/joke2k/django-environ
 django-model-utils==3.2.0  # https://github.com/jazzband/django-model-utils
 django-allauth==0.40.0  # https://github.com/pennersr/django-allauth
 django-redis==4.10.0  # https://github.com/niwinz/django-redis
-django-crispy-forms==1.7.2  # https://github.com/django-crispy-forms/django-crispy-forms
+django-crispy-forms==1.8.0  # https://github.com/django-crispy-forms/django-crispy-forms
 
 # Django REST Framework
 # ------------------------------------------------------------------------------
@@ -29,8 +29,8 @@ django-cors-headers==3.1.1  # https://github.com/ottoyiu/django-cors-headers
 # Additional
 # ------------------------------------------------------------------------------
 beautifulsoup4==4.8.1  # https://www.crummy.com/software/BeautifulSoup/
-numpy==1.17.2  # https://github.com/numpy/numpy
-pandas==0.25.1  # https://github.com/pandas-dev/pandas
+numpy==1.17.3  # https://github.com/numpy/numpy
+pandas==0.25.3  # https://github.com/pandas-dev/pandas
 pre-commit==1.20.0  # https://github.com/pre-commit/pre-commit
 requests==2.22.0  # https://github.com/psf/requests
 requests-oauthlib==1.2.0  # https://github.com/requests/requests-oauthlib
