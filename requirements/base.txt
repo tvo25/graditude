@@ -31,7 +31,6 @@ django-cors-headers==3.1.1  # https://github.com/ottoyiu/django-cors-headers
 beautifulsoup4==4.8.1  # https://www.crummy.com/software/BeautifulSoup/
 numpy==1.17.2  # https://github.com/numpy/numpy
 pandas==0.25.1  # https://github.com/pandas-dev/pandas
-pre-commit==1.20.0  # https://github.com/pre-commit/pre-commit
 requests==2.22.0  # https://github.com/psf/requests
 requests-oauthlib==1.2.0  # https://github.com/requests/requests-oauthlib
 tqdm==4.36.1  # https://github.com/tqdm/tqdm
