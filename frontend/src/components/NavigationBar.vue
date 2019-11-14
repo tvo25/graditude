@@ -1,5 +1,6 @@
 <template>
   <nav class="bd-navbar navbar has-shadow is-spaced">
+  <nav class="navbar">
     <div class="container">
       <div class="navbar-brand">
         <a class="navbar-item" href="#" style="font-weight:bold;">Graditude</a>
