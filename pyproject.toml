@@ -16,6 +16,8 @@ exclude = '''
     | buck-out
     | build
     | dist
+    | docs
+    | config
   )/
   | .*/migrations/.*
   | .*/urls\.py
