@@ -1,11 +1,10 @@
 import logging
 from datetime import date, timedelta
-from typing import List, Union
+from typing import Any, Dict, List, Union
 
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup as bs
-from tqdm import tqdm
 
 from config import celery_app
 from graditude.jobs.models import Company, Position, Post
@@ -28,10 +27,10 @@ def scrape_indeed(pages: List[int] = None):
     scraper.save_posts()
 
 
-def parse_date(date_posted: str, today: date.today) -> Union[date, None]:
-    """
-    Parses the date field based to return the correct value.
-    if the value is 'Just Posted' or 'Today', set day = 0.
+def parse_date(date_posted: str, today: date) -> Union[date, None]:
+    """Parses the date field based to return the correct value.
+
+    If the value is 'Just Posted' or 'Today', set day = 0.
     """
     if not date_posted:
         return None
@@ -44,12 +43,13 @@ def parse_date(date_posted: str, today: date.today) -> Union[date, None]:
     return today - timedelta(days=days_ago)
 
 
-def find_span(container: str, tag: str, class_: str) -> Union[str, None]:
+def find_span(container: bs, tag: str, class_: str) -> Union[str, None]:
+    """Searches a specified tag in a job post container.
+
+    If the tag is found, return the stripped version of the text.
+    Otherwise return None.
     """
-    Receives the job post container, and searches the tag for the
-    specified value.
-    If found, return the text.strip(), else return None.
-    """
+
     found = container.find(tag, class_=class_)
     if found is None:
         return None
@@ -57,6 +57,11 @@ def find_span(container: str, tag: str, class_: str) -> Union[str, None]:
 
 
 class IndeedScraper:
+    """A class representing an Indeed scraper."""
+
+    # Base url to perform queries against
+    url = "https://www.indeed.com/jobs?q="
+
     def __init__(self, pages=None):
         # The search queries to be used in requests
         positions = Position.objects.all()  # type: List[Position]
@@ -75,7 +80,7 @@ class IndeedScraper:
         for query in self.search_queries:
             for page in self.pages:
                 page_html = requests.get(
-                    f"https://www.indeed.com/jobs?q={query}&sort=date&l=California&explvl=entry_level&sort=date&start={page}"
+                    f"{self.url}{query}&sort=date&l=California&explvl=entry_level&sort=date&start={page}"
                 )
                 soup = bs(page_html.content, "html.parser")
                 post_container = soup.findAll("div", {"class": "row"})
@@ -83,7 +88,7 @@ class IndeedScraper:
 
         self.parse_posts()
 
-    def parse_container(self, containers: List[str]):
+    def parse_container(self, containers: List[bs]):
         """
         Parses the containers for the specified fields
         TODO: Make ID not equal to 1 for the source
@@ -94,7 +99,10 @@ class IndeedScraper:
         for container in containers:
             post_href = container.find("a", {"class": "jobtitle"})["href"]
 
-            fields = {f: find_span(container, "span", f) for f in span_fields}
+            fields = {
+                f: find_span(container, "span", f) for f in span_fields
+            }  # type: Dict[str, Any]
+
             fields.update(
                 {
                     "date_posted": parse_date(fields["date"], today),
@@ -105,18 +113,18 @@ class IndeedScraper:
                     "link": f"https://indeed.com/{post_href}",
                 }
             )
-            fields["is_sponsored"] = (True if fields["date_posted"] else False,)
+            fields["is_sponsored"] = bool(fields["date_posted"])
 
             self.df = self.df.append(fields, ignore_index=True)
 
     def parse_posts(self):
-        """
-         Parses the dataframe containing all of the job posts. The first
-         step is to remove companies that are spam, which is mainly
-         'Indeed Prime'. Afterwards, duplicate entries are dropped based
-         on the 'company', 'date_posted', and 'title' fields. Often times
-         there are multiple of the same job posting listed on different days
-         which is not useful to search through for the end-user.
+        """Parses the dataframe containing all of the job posts.
+
+        The first step is to remove companies that are spam, which is
+        mainly 'Indeed Prime'. Afterwards, duplicate entries are dropped
+        based on the 'company', 'date_posted', and 'title' fields. Often
+        times there are multiple of the same job posting listed on
+        different days which is not useful to search through for the end-user.
          """
         logger.info("Parsing posts")
 
@@ -128,10 +136,7 @@ class IndeedScraper:
         self.df = self.df.drop_duplicates(subset=["company", "date_posted", "title"])
 
     def save_posts(self):
-        """
-        Saves each dataframe row as a record using Django's get_or_create
-        (object only saves if it doesn't already exist)
-        """
+        """Saves each dataframe row as a record using get_or_create()."""
         logger.info("Savings posts to database")
         records = self.df.to_dict("records")
 

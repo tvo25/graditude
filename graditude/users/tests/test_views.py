@@ -17,10 +17,10 @@ class TestUserDetail:
     def setUp(self):
         self.client = APIClient()
         self.user = UserFactory()
-        self.url = reverse('user-detail', kwargs={"uuid": self.user.uuid})
+        self.url = reverse("user-detail", kwargs={"uuid": self.user.uuid})
 
         self.new_first_name = "Tom"
-        self.payload = {'first_name': self.new_first_name}
+        self.payload = {"first_name": self.new_first_name}
 
     def test_get_user(self):
         response = self.client.get(self.url)
@@ -35,7 +35,7 @@ class TestUserDetail:
 
     def test_put_update_user_authorized(self):
         # Include an appropriate `Authorization:` header on all requests.
-        self.client.credentials(HTTP_AUTHORIZATION=f'Token {self.user.auth_token}')
+        self.client.credentials(HTTP_AUTHORIZATION=f"Token {self.user.auth_token}")
 
         response = self.client.put(self.url, self.payload)
         assert response.status_code == status.HTTP_200_OK
@@ -48,12 +48,12 @@ class TestUserCreateViewSet:
     @pytest.fixture(autouse=True)
     def setup(self, client):
         self.client = APIClient()
-        self.url = reverse('user-list')
+        self.url = reverse("user-list")
         self.user_data = model_to_dict(UserFactory.build())
 
         # Fields set as None, which cannot be serialized as JSON
-        self.user_data.pop('id')
-        self.user_data.pop('last_login')
+        self.user_data.pop("id")
+        self.user_data.pop("last_login")
 
     def test_post_invalid_fail(self):
         response = self.client.post(self.url, {})
@@ -63,6 +63,6 @@ class TestUserCreateViewSet:
         response = self.client.post(self.url, self.user_data)
         assert response.status_code == status.HTTP_201_CREATED
 
-        user = User.objects.get(pk=response.data.get('id'))
+        user = User.objects.get(pk=response.data.get("id"))
         assert user.username == self.user_data.get("username")
         assert user.check_password(self.user_data.get("password")) is True

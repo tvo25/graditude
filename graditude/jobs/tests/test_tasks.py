@@ -16,8 +16,8 @@ def test_scrape_indeed(settings):
     """A basic test to execute the scrape_indeed Celery task."""
     settings.CELERY_TASK_ALWAYS_EAGER = True
     # Create the position
-    PositionFactory(title='Software Engineer')
-    SourceFactory(name='LinkedIn')
+    PositionFactory(title="Software Engineer")
+    SourceFactory(name="LinkedIn")
 
     # Check successful task invoke
     pages = list(range(0, 101, 10))
@@ -36,7 +36,7 @@ def test_parse_date():
     be 9/16/2019 in date format.
 
     """
-    date_posted = '3 days ago'
+    date_posted = "3 days ago"
     today = date(2019, 9, 19)
 
     parsed_date = parse_date(date_posted, today)
@@ -54,8 +54,8 @@ class TestIndeedScraper:
         all of the methods from the IndeedScraper class.
         """
         # Create the position
-        PositionFactory(title='Software Engineer')
-        SourceFactory(id=1, name='LinkedIn')
+        PositionFactory(title="Software Engineer")
+        SourceFactory(id=1, name="LinkedIn")
 
         # Check successful task invoke
         pages = list(range(0, 101, 10))
@@ -70,8 +70,8 @@ class TestIndeedScraper:
         Test the parse_container method to that the dataframe
         contains jobs posts from the url.
         """
-        query = PositionFactory(title='Software Engineer').search_str()
-        SourceFactory(id=1, name='LinkedIn')
+        query = PositionFactory(title="Software Engineer").search_str()
+        SourceFactory(id=1, name="LinkedIn")
 
         pages = list(range(0, 101, 10))
         scraper = IndeedScraper(pages)
@@ -98,41 +98,41 @@ class TestIndeedScraper:
 
         posts = [
             {
-                'title': 'Software Engineer',
-                'company': 'Graditude',
-                'description': "Looking for Python expert",
-                'location': 'San Jose, CA',
-                'is_sponsored': False,
-                'date_posted': today,
-                'date_added_db': today,
-                'source': source.id,
-                'link': 'graditude.herokuapp.com',
-                'position': 'Full-time'
+                "title": "Software Engineer",
+                "company": "Graditude",
+                "description": "Looking for Python expert",
+                "location": "San Jose, CA",
+                "is_sponsored": False,
+                "date_posted": today,
+                "date_added_db": today,
+                "source": source.id,
+                "link": "graditude.herokuapp.com",
+                "position": "Full-time",
             },
             {
-                'title': 'Back End Engineer',
-                'company': 'Indeed Prime',
-                'description': "Write some REST APIs in Django!",
-                'location': 'San Franciso, CA',
-                'is_sponsored': False,
-                'date_posted': today,
-                'date_added_db': today,
-                'source': source.id,
-                'link': 'graditude.herokuapp.com',
-                'position': 'Full-time'
+                "title": "Back End Engineer",
+                "company": "Indeed Prime",
+                "description": "Write some REST APIs in Django!",
+                "location": "San Franciso, CA",
+                "is_sponsored": False,
+                "date_posted": today,
+                "date_added_db": today,
+                "source": source.id,
+                "link": "graditude.herokuapp.com",
+                "position": "Full-time",
             },
             {
-                'title': 'Front End Engineer',
-                'company': None,
-                'description': "You love QA?",
-                'location': 'Santa Clara, CA',
-                'is_sponsored': False,
-                'date_posted': today,
-                'date_added_db': today,
-                'source': source.id,
-                'link': 'graditude.herokuapp.com',
-                'position': 'Full-time'
-            }
+                "title": "Front End Engineer",
+                "company": None,
+                "description": "You love QA?",
+                "location": "Santa Clara, CA",
+                "is_sponsored": False,
+                "date_posted": today,
+                "date_added_db": today,
+                "source": source.id,
+                "link": "graditude.herokuapp.com",
+                "position": "Full-time",
+            },
         ]
         for index, post in enumerate(posts):
             scraper.df = scraper.df.append(post, ignore_index=True)
@@ -140,14 +140,15 @@ class TestIndeedScraper:
         scraper.parse_posts()
 
         # Check no spam companies
-        assert not ((scraper.df['company']) == 'Indeed Prime').any()
+        assert not ((scraper.df["company"]) == "Indeed Prime").any()
 
         # Check no null companies
-        assert not scraper.df['company'].isnull().values.any()
+        assert not scraper.df["company"].isnull().values.any()
 
         # Check no duplicates
         duplicates_exist = scraper.df.duplicated(
-            subset=['company', 'date_posted', 'title'])[0]
+            subset=["company", "date_posted", "title"]
+        )[0]
         assert not duplicates_exist
 
     def test_save_posts(self):
@@ -160,16 +161,16 @@ class TestIndeedScraper:
 
         source = SourceFactory()
         post = {
-            'title': 'Software Engineer',
-            'company': 'Graditude',
-            'description': "Looking for Python expert",
-            'location': 'San Jose, CA',
-            'is_sponsored': False,
-            'date_posted': today,
-            'date_added_db': today,
-            'source': source.id,
-            'link': 'graditude.herokuapp.com',
-            'position': 'Full-time'
+            "title": "Software Engineer",
+            "company": "Graditude",
+            "description": "Looking for Python expert",
+            "location": "San Jose, CA",
+            "is_sponsored": False,
+            "date_posted": today,
+            "date_added_db": today,
+            "source": source.id,
+            "link": "graditude.herokuapp.com",
+            "position": "Full-time",
         }
 
         scraper.df = scraper.df.append(post, ignore_index=True)
