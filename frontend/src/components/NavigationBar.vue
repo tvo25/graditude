@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar">
+  <nav class="bd-navbar navbar has-shadow is-spaced">
     <div class="container">
       <div class="navbar-brand">
         <a class="navbar-item" href="#" style="font-weight:bold;">Graditude</a>
@@ -11,7 +11,7 @@
       </div>
       <div id="navMenu" class="navbar-menu">
         <div class="navbar-end">
-          <a href="#" class="navbar-item is-active">Home</a>
+          <a href="#" class="navbar-item">Home</a>
           <a href="#" class="navbar-item">About Us</a>
           <a href="#" class="navbar-item">Services</a>
           <a href="#" class="navbar-item">Contact Us</a>
