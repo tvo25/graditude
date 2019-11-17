@@ -4,7 +4,6 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 
-from graditude.jobs import models
 from graditude.jobs.tests import factories
 
 if TYPE_CHECKING:
@@ -15,13 +14,13 @@ pytestmark = pytest.mark.django_db
 
 class TestJobsAPI:
     @pytest.fixture(autouse=True)
-    def setUp(self, client: 'Client'):
+    def setUp(self, client: "Client"):
         self.client = client
 
     def test_list(self):
-        list_url = reverse('jobs:list')
+        list_url = reverse("jobs:list")
 
-        posts = factories.PostFactory.create_batch(20)
+        factories.PostFactory.create_batch(20)
 
         response = self.client.get(list_url)
 
@@ -32,7 +31,7 @@ class TestJobsAPI:
 
     def test_detail(self):
         post = factories.PostFactory()
-        detail_url = reverse('jobs:detail', kwargs={'pk': post.id})
+        detail_url = reverse("jobs:detail", kwargs={"pk": post.id})
 
         response = self.client.get(detail_url)
-        assert response.json().get('title') == post.title
+        assert response.json().get("title") == post.title
