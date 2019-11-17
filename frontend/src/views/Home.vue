@@ -2,7 +2,7 @@
   <div id="home">
     <NavigationBar></NavigationBar>
     <!-- Hero-->
-    <section class="hero is-large">
+    <section class="hero is-medium">
       <div class="hero-body">
         <div class="container">
           <div class="columns is-vcentered" data-aos="fade-left">
@@ -20,7 +20,7 @@
     <!-- End of Hero -->
 
     <!-- Communication -->
-    <section class="section">
+    <section id="communication" class="section">
       <div class="container">
         <div class="columns">
           <div class="column is-full has-text-centered" data-aos="fade-left" data-aos-delay="300">
@@ -34,9 +34,19 @@
     <section class="section">
       <div class="container">
         <div class="columns is-centered">
+          <div class="column is-one-third has-text-centered" data-aos="zoom-in">
+            <figure class="image is-128x128 is-horizontal-center">
+              <img src="../assets/img/teamwork.svg" alt data-aos="zoom-in" />
+            </figure>
+            <p class="promo-caption">Stay Motivated</p>
+            <p class="light center">
+              Job hunting for new graduates can be tough. Graditude's mission is to
+              encourage the growth of the next generation of professionals.
+            </p>
+          </div>
           <div class="column is-one-third has-text-centered">
             <figure class="image is-128x128 is-horizontal-center" data-aos="zoom-in">
-              <img src="../assets/img/database.svg" alt />
+              <img src="../assets/img/cloud-computing.svg" alt />
             </figure>
             <p class="promo-caption">Searching, made simple</p>
             <p class="light center">
@@ -56,16 +66,6 @@
               efficient searching becomes.
             </p>
           </div>
-          <div class="column is-one-third has-text-centered" data-aos="zoom-in">
-            <figure class="image is-128x128 is-horizontal-center">
-              <img src="../assets/img/support.svg" alt data-aos="zoom-in" />
-            </figure>
-            <p class="promo-caption">Stay Motivated</p>
-            <p class="light center">
-              Job hunting for new graduates can be tough. Graditude's mission is to
-              encourage the growth of the next generation of professionals.
-            </p>
-          </div>
         </div>
       </div>
     </section>
@@ -73,7 +73,7 @@
       <div class="container">
         <div class="columns is-centered" data-aos="fade-left" data-aos-delay="300">
           <div class="column is-one-quarter has-text-centered">
-            <a href class="button is-info">Ready to elevate your search?</a>
+            <a href class="button is-primary">Ready to elevate your search?</a>
           </div>
         </div>
       </div>
@@ -88,21 +88,18 @@
     <!-- Footer -->
     <footer class="section">
       <hr />
-      <Contact></Contact>
     </footer>
   </div>
 </template>
 
 <script>
 import JobsTable from "../components/JobsTable";
-import Contact from "../components/Contact";
 import NavigationBar from "../components/NavigationBar";
 
 export default {
   name: "home",
   components: {
     JobsTable: JobsTable,
-    Contact: Contact,
     NavigationBar: NavigationBar
   }
 };
@@ -112,5 +109,9 @@ export default {
 .is-horizontal-center {
   margin-left: auto;
   margin-right: auto;
+}
+
+#communication {
+  margin-top: 10%;
 }
 </style>
