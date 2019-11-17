@@ -1,5 +1,3 @@
-from typing import TYPE_CHECKING
-
 import pytest
 
 from graditude.jobs.tests.factories import PostFactory, PositionFactory
@@ -9,18 +7,18 @@ pytestmark = pytest.mark.django_db
 
 class TestPositionModel:
     def test_search_str(self):
-        intern = PositionFactory.build(title='Front End Engineer')
+        intern = PositionFactory.build(title="Front End Engineer")
 
-        assert intern.search_str() == 'Front+End+Engineer'
+        assert intern.search_str() == "Front+End+Engineer"
 
 
 class TestPostModel:
     def test_experience_property(self):
-        intern = PostFactory.build(title='Software Engineer Intern')
-        full_time = PostFactory.build(title='Software Engineer')
+        intern = PostFactory.build(title="Software Engineer Intern")
+        full_time = PostFactory.build(title="Software Engineer")
 
-        assert intern.experience == 'Internship'
-        assert full_time.experience == 'Full-Time'
+        assert intern.experience == "Internship"
+        assert full_time.experience == "Full-Time"
 
     def test_sponsored_property(self):
         post_no_date = PostFactory.build(date_posted=None)
