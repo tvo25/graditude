@@ -5,7 +5,10 @@
         <div class="column is-full">
           <nav class="level" style>
             <div class="level-item">
-              <a class="button is-primary is-outlined navbar-item bd-navbar-item">Get in Touch</a>
+              <a
+                class="button is-info is-outlined navbar-item bd-navbar-item"
+                @click="isComponentModalActive = true"
+              >Get in Touch</a>
             </div>
             <b-modal :active.sync="isComponentModalActive" has-modal-card trap-focus>
               <ContactForm v-bind="formProps"></ContactForm>
@@ -25,10 +28,10 @@ export default {
   components: {
     ContactForm
   },
-  props: ["isComponentModalActive"],
 
   data() {
     return {
+      isComponentModalActive: false,
       formProps: {
         email: "your@email.com"
       }

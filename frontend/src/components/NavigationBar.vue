@@ -1,21 +1,23 @@
 <template>
-  <nav class="bd-navbar navbar has-shadow is-spaced" :class="{'navbar--hidden': !showNavbar}">
+  <nav class="bd-navbar navbar is-spaced" :class="{'navbar--hidden': !showNavbar}">
     <div class="container">
       <div class="navbar-brand">
-        <a class="navbar-item" href="#" style="font-weight:bold;">Graditude</a>
+          <figure class="navbar-item is-128image" id="navbar-logo">
+              <img src="../assets/img/logo.png" alt />
+            </figure>
+
+        <!-- <a class="navbar-item" id="navbar-logo" href="#" style="font-weight:bold;">Graditude</a> -->
         <span class="navbar-burger burger" data-target="navMenu">
-          <span></span>
           <span></span>
           <span></span>
           <span></span>
         </span>
       </div>
       <div id="navMenu" class="navbar-menu">
-        <div class="navbar-end">
+        <div class="navbar-start">
           <a href="#" class="navbar-item bd-navbar-item">Home</a>
           <a href="#" class="navbar-item bd-navbar-item">About Us</a>
           <a href="#" class="navbar-item bd-navbar-item">Services</a>
-          <Contact @click="clicked.bind(true, isComponentModalActive)"></Contact>
         </div>
       </div>
     </div>
@@ -23,8 +25,6 @@
 </template>
 
 <script>
-import Contact from "../components/Contact";
-
 document.addEventListener("DOMContentLoaded", function() {
   // Get all "navbar-burger" elements
   var $navbarBurgers = Array.prototype.slice.call(
@@ -51,9 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 export default {
   name: "NavigationBar",
-  components: {
-    Contact: Contact
-  },
+  components: {},
   data() {
     return {
       showNavbar: true,
@@ -101,5 +99,8 @@ export default {
 .navbar.navbar--hidden {
   box-shadow: none;
   transform: translate3d(0, -100%, 0);
+}
+
+.navbar #navbar-logo {
 }
 </style>
