@@ -2,9 +2,9 @@
   <nav class="bd-navbar navbar is-spaced" :class="{'navbar--hidden': !showNavbar}">
     <div class="container">
       <div class="navbar-brand">
-          <figure class="navbar-item is-128image" id="navbar-logo">
-              <img src="../assets/img/logo.png" alt />
-            </figure>
+        <figure class="navbar-item" id="navbar-logo">
+          <img src="../assets/img/logo.png" alt />
+        </figure>
 
         <!-- <a class="navbar-item" id="navbar-logo" href="#" style="font-weight:bold;">Graditude</a> -->
         <span class="navbar-burger burger" data-target="navMenu">
@@ -15,9 +15,14 @@
       </div>
       <div id="navMenu" class="navbar-menu">
         <div class="navbar-start">
-          <a href="#" class="navbar-item bd-navbar-item">Home</a>
-          <a href="#" class="navbar-item bd-navbar-item">About Us</a>
-          <a href="#" class="navbar-item bd-navbar-item">Services</a>
+          <a href="#" class="navbar-item bd-navbar-item">About</a>
+          <a href="#" class="navbar-item bd-navbar-item" v-scroll-to="'#JobsTable'">Careers</a>
+        </div>
+        <div class="navbar-end">
+          <a
+            class="button is-info navbar-item bd-navbar-item"
+            @click="isComponentModalActive = true"
+          >Sign In</a>
         </div>
       </div>
     </div>
@@ -101,6 +106,4 @@ export default {
   transform: translate3d(0, -100%, 0);
 }
 
-.navbar #navbar-logo {
-}
 </style>
