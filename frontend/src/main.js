@@ -17,14 +17,17 @@ import 'bulma/css/bulma.css';
 Vue.config.productionTip = false
 Vue.use(Buefy)
 
+var VueScrollTo = require('vue-scrollto');
+Vue.use(VueScrollTo, {
+  duration: 1200,
+})
+
 new Vue({
-  created () {
+  created() {
     AOS.init({
       once: true
-    }
-    )
+    })
   },
   router,
   render: h => h(App)
 }).$mount('#app')
-
