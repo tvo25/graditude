@@ -5,31 +5,29 @@
     <section class="hero is-medium">
       <div class="hero-body">
         <div class="container">
-          <div class="columns is-vcentered" data-aos="fade-left">
-            <div class="column is-half has-text-right">
-              <figure class="image is-horizontal-center">
-                <img src="../assets/img/logo.png" alt />
-              </figure>
-              <h2 class="subtitle">Graditude is Job 1.</h2>
+          <div class="columns is-centered">
+            <div class="column is-half has-text-centered">
+              <p
+                class="is-size-1 has-text-weight-bold"
+              >It only takes a little bit of Graditude.</p>
+              <p
+                class="is-size-6 hero-content"
+              >Graditude aims to optimize your job hunt with just a few clicks.</p>
             </div>
-            <div class="column is-half"></div>
           </div>
         </div>
+        <section>
+          <div class="container">
+            <div class="columns is-centered" data-aos="fade-left">
+              <div class="column is-one-quarter has-text-centered">
+                <a href class="button is-info hero-content">Ready to elevate your search?</a>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </section>
     <!-- End of Hero -->
-
-    <!-- Communication -->
-    <section id="communication" class="section">
-      <div class="container">
-        <div class="columns">
-          <div class="column is-full has-text-centered" data-aos="fade-left" data-aos-delay="300">
-            <p class="is-size-2">Land your next job, starting now.</p>
-            <p>Are you a new graduate software engineer? Well, you've come to the right place.</p>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <section class="section">
       <div class="container">
@@ -68,15 +66,7 @@
         </div>
       </div>
     </section>
-    <section>
-      <div class="container">
-        <div class="columns is-centered" data-aos="fade-left" data-aos-delay="300">
-          <div class="column is-one-quarter has-text-centered">
-            <a href class="button is-info">Ready to elevate your search?</a>
-          </div>
-        </div>
-      </div>
-    </section>
+
     <section class="section">
       <div class="container">
         <div class="column">
@@ -114,6 +104,10 @@ export default {
     rgba(255, 255, 255, 1) 0%,
     rgba(28, 93, 132, 0.06993090204831931) 100%
   );
+}
+
+.hero-content {
+  margin-top: 20px;
 }
 
 .is-horizontal-center {
