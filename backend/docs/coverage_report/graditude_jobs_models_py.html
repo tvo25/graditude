@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
-    <title>Coverage for graditude/jobs/models.py: 78%</title>
+    <title>Coverage for graditude/jobs/models.py: 100%</title>
     <link rel="stylesheet" href="style.css" type="text/css">
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="jquery.hotkeys.js"></script>
@@ -17,13 +17,13 @@
 <div id="header">
     <div class="content">
         <h1>Coverage for <b>graditude/jobs/models.py</b> :
-            <span class="pc_cov">78%</span>
+            <span class="pc_cov">100%</span>
         </h1>
         <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
         <h2 class="stats">
             36 statements &nbsp;
-            <span class="run shortkey_r button_toggle_run">28 run</span>
-            <span class="mis show_mis shortkey_m button_toggle_mis">8 missing</span>
+            <span class="run shortkey_r button_toggle_run">36 run</span>
+            <span class="mis show_mis shortkey_m button_toggle_mis">0 missing</span>
             <span class="exc show_exc shortkey_x button_toggle_exc">0 excluded</span>
         </h2>
     </div>
@@ -78,7 +78,7 @@
     <p id="t25" class="run"><span class="n"><a href="#t25">25</a></span><span class="t">    <span class="nam">title</span> <span class="op">=</span> <span class="nam">models</span><span class="op">.</span><span class="nam">CharField</span><span class="op">(</span><span class="nam">max_length</span><span class="op">=</span><span class="num">255</span><span class="op">,</span> <span class="nam">choices</span><span class="op">=</span><span class="nam">TITLE_CHOICES</span><span class="op">,</span> <span class="nam">unique</span><span class="op">=</span><span class="key">True</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t26" class="pln"><span class="n"><a href="#t26">26</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t27" class="run"><span class="n"><a href="#t27">27</a></span><span class="t">    <span class="key">def</span> <span class="nam">search_str</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t28" class="mis show_mis"><span class="n"><a href="#t28">28</a></span><span class="t">        <span class="key">return</span> <span class="nam">self</span><span class="op">.</span><span class="nam">title</span><span class="op">.</span><span class="nam">replace</span><span class="op">(</span><span class="str">" "</span><span class="op">,</span> <span class="str">"+"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t28" class="run"><span class="n"><a href="#t28">28</a></span><span class="t">        <span class="key">return</span> <span class="nam">self</span><span class="op">.</span><span class="nam">title</span><span class="op">.</span><span class="nam">replace</span><span class="op">(</span><span class="str">" "</span><span class="op">,</span> <span class="str">"+"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t29" class="pln"><span class="n"><a href="#t29">29</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t30" class="pln"><span class="n"><a href="#t30">30</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t31" class="run"><span class="n"><a href="#t31">31</a></span><span class="t"><span class="key">class</span> <span class="nam">Post</span><span class="op">(</span><span class="nam">models</span><span class="op">.</span><span class="nam">Model</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -102,24 +102,24 @@
     <p id="t49" class="pln"><span class="n"><a href="#t49">49</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t50" class="run"><span class="n"><a href="#t50">50</a></span><span class="t">    <span class="op">@</span><span class="nam">property</span>&nbsp;</span><span class="r"></span></p>
     <p id="t51" class="run"><span class="n"><a href="#t51">51</a></span><span class="t">    <span class="key">def</span> <span class="nam">experience</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t52" class="mis show_mis"><span class="n"><a href="#t52">52</a></span><span class="t">        <span class="nam">substring_list</span> <span class="op">=</span> <span class="op">[</span><span class="str">"intern"</span><span class="op">,</span> <span class="str">"internship"</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t53" class="mis show_mis"><span class="n"><a href="#t53">53</a></span><span class="t">        <span class="key">if</span> <span class="nam">any</span><span class="op">(</span><span class="nam">substring</span> <span class="key">in</span> <span class="nam">self</span><span class="op">.</span><span class="nam">title</span><span class="op">.</span><span class="nam">lower</span><span class="op">(</span><span class="op">)</span> <span class="key">for</span> <span class="nam">substring</span> <span class="key">in</span> <span class="nam">substring_list</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t54" class="mis show_mis"><span class="n"><a href="#t54">54</a></span><span class="t">            <span class="key">return</span> <span class="str">"Internship"</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t52" class="run"><span class="n"><a href="#t52">52</a></span><span class="t">        <span class="nam">substring_list</span> <span class="op">=</span> <span class="op">[</span><span class="str">"intern"</span><span class="op">,</span> <span class="str">"internship"</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t53" class="run"><span class="n"><a href="#t53">53</a></span><span class="t">        <span class="key">if</span> <span class="nam">any</span><span class="op">(</span><span class="nam">substring</span> <span class="key">in</span> <span class="nam">self</span><span class="op">.</span><span class="nam">title</span><span class="op">.</span><span class="nam">lower</span><span class="op">(</span><span class="op">)</span> <span class="key">for</span> <span class="nam">substring</span> <span class="key">in</span> <span class="nam">substring_list</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t54" class="run"><span class="n"><a href="#t54">54</a></span><span class="t">            <span class="key">return</span> <span class="str">"Internship"</span>&nbsp;</span><span class="r"></span></p>
     <p id="t55" class="pln"><span class="n"><a href="#t55">55</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t56" class="mis show_mis"><span class="n"><a href="#t56">56</a></span><span class="t">            <span class="key">return</span> <span class="str">"Full-Time"</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t56" class="run"><span class="n"><a href="#t56">56</a></span><span class="t">            <span class="key">return</span> <span class="str">"Full-Time"</span>&nbsp;</span><span class="r"></span></p>
     <p id="t57" class="pln"><span class="n"><a href="#t57">57</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t58" class="run"><span class="n"><a href="#t58">58</a></span><span class="t">    <span class="op">@</span><span class="nam">property</span>&nbsp;</span><span class="r"></span></p>
     <p id="t59" class="run"><span class="n"><a href="#t59">59</a></span><span class="t">    <span class="key">def</span> <span class="nam">sponsored</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t60" class="mis show_mis"><span class="n"><a href="#t60">60</a></span><span class="t">        <span class="key">if</span> <span class="key">not</span> <span class="nam">self</span><span class="op">.</span><span class="nam">date_posted</span> <span class="key">or</span> <span class="key">not</span> <span class="nam">self</span><span class="op">.</span><span class="nam">location</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t61" class="mis show_mis"><span class="n"><a href="#t61">61</a></span><span class="t">            <span class="key">return</span> <span class="key">True</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t60" class="run"><span class="n"><a href="#t60">60</a></span><span class="t">        <span class="key">if</span> <span class="key">not</span> <span class="nam">self</span><span class="op">.</span><span class="nam">date_posted</span> <span class="key">or</span> <span class="key">not</span> <span class="nam">self</span><span class="op">.</span><span class="nam">location</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t61" class="run"><span class="n"><a href="#t61">61</a></span><span class="t">            <span class="key">return</span> <span class="key">True</span>&nbsp;</span><span class="r"></span></p>
     <p id="t62" class="pln"><span class="n"><a href="#t62">62</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t63" class="mis show_mis"><span class="n"><a href="#t63">63</a></span><span class="t">            <span class="key">return</span> <span class="key">False</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t63" class="run"><span class="n"><a href="#t63">63</a></span><span class="t">            <span class="key">return</span> <span class="key">False</span>&nbsp;</span><span class="r"></span></p>
 </div>
 <div id="footer">
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.0.3</a>,
-            created at 2020-04-05 21:30
+            created at 2020-04-05 21:45
         </p>
     </div>
 </div>
