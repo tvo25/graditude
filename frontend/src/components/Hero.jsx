@@ -8,7 +8,7 @@ const styles = {
       'linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(28, 93, 132, 0.06993090204831931) 100%)',
   },
   heroTitle: {
-    fontSize: '48px',
+    fontSize: '2.5rem',
     fontWeight: 'bold',
   },
 };
@@ -16,7 +16,7 @@ const styles = {
 function Hero() {
   return (
     <Row style={styles.container} type="flex" align="middle">
-      <Col span={6} offset={9}>
+      <Col span={10} offset={6}>
         <h1 style={styles.heroTitle}>
           It only takes a little bit of Graditude.
         </h1>
