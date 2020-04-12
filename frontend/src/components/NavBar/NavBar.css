@@ -1,0 +1,81 @@
+.navbar {
+  margin-top: 20px;
+}
+
+.navbar-logo {
+  width: 175px;
+  float: left;
+}
+
+.navbar-logo a {
+  display: inline-block;
+
+  /* padding: 19px 20px; */
+}
+
+.navbar-container .ant-menu-item {
+  padding: 0px 5px;
+}
+
+.navbar-container .ant-menu-submenu-title {
+  padding: 10px 20px;
+}
+
+.navbar-container .ant-menu-item a,
+.navbar-container .ant-menu-submenu-title a {
+  padding: 10px 15px;
+}
+
+.navbar-container .ant-menu-horizontal {
+  border-bottom: none;
+}
+
+.navbar-container .navbar-left {
+  float: left;
+}
+
+.navbar-container .navbar-right {
+  float: right;
+}
+
+.navbar-mobile-button {
+  float: right;
+  height: 32px;
+  padding: 6px;
+  margin-top: 8px;
+  display: none !important; /* use of important to overwrite ant-btn */
+  background: #3e91f7;
+}
+
+.navbar-drawer .ant-drawer-body {
+  padding: 0 !important;
+}
+
+/* align header of Drawer with header of page */
+.navbar-drawer .ant-drawer-header {
+  padding: 14px 24px !important;
+}
+
+@media (max-width: 767px) {
+  .navbar-mobile-button {
+    display: inline-block !important;
+  }
+
+  .navbar-left,
+  .navbar-right {
+    display: none;
+  }
+
+  .navbar-logo a {
+    margin-left: -20px;
+  }
+
+  .navbar-container .ant-menu-item,
+  .navbar-container .ant-menu-submenu-title {
+    padding: 1px 20px;
+  }
+
+  .navbar-logo a {
+    padding: 10px 20px;
+  }
+}
