@@ -1,6 +1,7 @@
 import React from 'react';
-import { Row, Col, Typography } from 'antd';
+import { Row, Col } from 'antd';
 import Hero from '../components/Hero';
+import SearchTable from '../components/SearchTable';
 
 import teamImg from '../assets/img/teamwork.svg';
 import cloudImg from '../assets/img/cloud-computing.svg';
@@ -66,6 +67,13 @@ function Home() {
               to navigate. The fewer clicks are made, the more efficient
               searching becomes.
             </p>
+          </Col>
+        </Row>
+      </div>
+      <div>
+        <Row>
+          <Col span={18} offset={3}>
+            <SearchTable />
           </Col>
         </Row>
       </div>

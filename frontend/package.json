@@ -60,5 +60,6 @@
     "src/**/*.+(js|jsx|ts|tsx|css|sass|less|json)": [
       "prettier --write"
     ]
-  }
+  },
+  "proxy": "http://127.0.0.1:8000"
 }
