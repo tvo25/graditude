@@ -303,6 +303,15 @@ WEBPACK_LOADER = {
         "STATS_FILE": os.path.join(FRONTEND_DIR, "webpack-stats.json"),
     }
 }
+<<<<<<< HEAD
+=======
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+    "http://localhost:8000",
+    "http://localhost:8080",
+    "http://localhost:3000",
+)
+>>>>>>> Add localhost:3000 to CORS_ORIGIN_WHITELIST
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAdminUser",),
