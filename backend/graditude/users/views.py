@@ -1,8 +1,8 @@
 from rest_framework import viewsets, mixins
 from rest_framework.permissions import AllowAny
 from graditude.users.models import User
-from graditude.users.api.permissions import IsUserOrReadOnly
-from graditude.users.api.serializers import CreateUserSerializer, UserSerializer
+from graditude.users.permissions import IsUserOrReadOnly
+from graditude.users.serializers import CreateUserSerializer, UserSerializer
 
 
 class UserViewSet(
