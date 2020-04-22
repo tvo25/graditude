@@ -1,7 +1,0 @@
-# PostgreSQL
-# ------------------------------------------------------------------------------
-POSTGRES_HOST=postgres
-POSTGRES_PORT=5432
-POSTGRES_DB=graditude
-POSTGRES_USER=EmEMTJgjFZQrEcpmVPskjVZHiQDzdAvJ
-POSTGRES_PASSWORD=pn32oOeBSxntJ6TTXKAvawOSPn48qPvq1BoNY9NoVi6wn0c6LeDjPEdLSTYip5Zm
