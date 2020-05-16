@@ -14,6 +14,6 @@ python:
 install:
   - pip install -r requirements/local.txt
 script:
-  - py.test --cov-report term --cov=app/test/
+  - pytest backend --cov-report term
 after_success:
-    - codecov
+  - codecov
