@@ -1,0 +1,62 @@
+version: "2"
+
+services:
+  postgres:
+    image: postgres:11.6
+    container_name: postgres
+    volumes:
+      - /local_postgres_data:/var/lib/postgresql/data
+      - /local_postgres_data_backups:/backups
+    env_file:
+      - .env
+    expose:
+      - "${POSTGRES_PORT}"
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    command: -p ${POSTGRES_PORT}
+
+  web: &web
+    restart: always
+    image: web
+    container_name: web
+    build: ./
+    volumes:
+      - ./:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    command: >
+      bash -c "python wait_for_postgres.py &&
+                python manage.py migrate &&
+                python manage.py runserver 0.0.0.0:8000"
+
+  redis:
+    image: redis:5.0
+    container_name: redis
+
+  celery_worker:
+    image: celery_worker
+    container_name: celery_worker
+    volumes:
+      - ./:/code
+    depends_on:
+      - redis
+      - web
+      - postgres
+    command: celery -A config.celery_app worker -l INFO
+
+  celery_beat:
+    image: celery_beat
+    container_name: celery_beat
+    volumes:
+      - ./:/code
+    depends_on:
+      - redis
+      - web
+      - postgres
+    command: celery -A config.celery_app beat -l INFO
