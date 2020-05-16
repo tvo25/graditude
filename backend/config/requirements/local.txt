@@ -33,4 +33,4 @@ django-coverage-plugin==1.8.0  # https://github.com/nedbat/django_coverage_plugi
 
 # Celery
 # ------------------------------------------------------------------------------
-eventlet==0.25.1  # https://github.com/eventlet/eventlet
+eventlet==0.25.2  # https://github.com/eventlet/eventlet
