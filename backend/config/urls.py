@@ -6,17 +6,13 @@ from django.views.generic import TemplateView
 from django.views import defaults as default_views
 from rest_framework.authtoken import views
 from rest_framework.routers import DefaultRouter
-from rest_framework.authtoken import views
 
-from graditude.users.api.views import (
-    UserViewSet,
-    UserCreateViewSet
-)
+from graditude.users.views import UserViewSet, UserCreateViewSet
 
 # Registering viewsets to the router
 router = DefaultRouter()
-router.register(r'users', UserViewSet)
-router.register(r'users', UserCreateViewSet)
+router.register(r"users", UserViewSet)
+router.register(r"users", UserCreateViewSet)
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="index.html"), name="app"),
@@ -28,11 +24,10 @@ urlpatterns = [
     # User management
     path("accounts/", include("allauth.urls")),
     path("api-token-auth/", views.obtain_auth_token),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     # Your stuff: custom urls includes go here
-    path('api/v1/', include(router.urls)),
-    path("api/v1/jobs/", include('graditude.jobs.urls', namespace='jobs')),
-
+    path("api/v1/", include(router.urls)),
+    path("api/v1/jobs/", include("graditude.jobs.urls", namespace="jobs")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
