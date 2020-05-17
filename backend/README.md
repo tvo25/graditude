@@ -9,8 +9,6 @@
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Graditude is a project designed for new graduate software engineers to land their next job without the stress of never-ending searches. Graditude's design is focused on minimalism to provide a streamlined job hunting experience. Whether the focus is in software engineering or web dev, we've got you covered. Remember, Graditude is Job 1.
-
 ## Prerequisites
 
 - [Docker](https://docs.docker.com/get-docker/)
@@ -22,18 +20,23 @@ Graditude is a project designed for new graduate software engineers to land thei
 
 1. Configure local .env file (template provided)
 
-2. Setup pre-commit
+2. Setup pre-commit (same as root README instructions)
 
-   ```bash
-   pre-commit install
-   ```
-
-- This repo has default integration with pre-commit for identifying simple issues before submission to code review.
+- This repo has default integration with pre-commit for identifying simple issues before submission to code review. Since this a Python package, you will need to setup the Python virtual environment to install pre-commit hooks into your local git repo.
 
 - The linters and stylers include:
-  - Code styling: black
-  - Linting: flake8
+
+  - Code styling: prettier, black
+  - Linting: ESLint, flake8
   - Static Type Checking: mypy
+
+  ```bash
+  python3 -m venv venv
+  source venv/bin/activate
+  pip install -r config/requirements/local.txt
+
+  pre-commit install
+  ```
 
 ### Run the Stack
 
