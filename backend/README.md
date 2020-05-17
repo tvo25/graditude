@@ -1,0 +1,88 @@
+# Graditude
+
+[![Made with Django.](https://www.djangoproject.com/m/img/badges/djangomade124x25.gif)](http://www.djangoproject.com)
+
+[![pipeline status](https://travis-ci.com/tomvothecoder/graditude.svg?branch=master)](https://travis-ci.com/tomvothecoder/graditude)
+[![Codecov Coverage](https://codecov.io/gh/tomvothecoder/graditude/branch/master/graph/badge.svg)](https://codecov.io/gh/tomvothecoder/graditude)
+[![Updates](https://pyup.io/repos/github/tomvothecoder/graditude/shield.svg)](https://pyup.io/repos/github/tomvothecoder/graditude/)
+[![Python 3](https://pyup.io/repos/github/tomvothecoder/graditude/python-3-shield.svg)](https://pyup.io/repos/github/tomvothecoder/graditude/)
+[![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+Graditude is a project designed for new graduate software engineers to land their next job without the stress of never-ending searches. Graditude's design is focused on minimalism to provide a streamlined job hunting experience. Whether the focus is in software engineering or web dev, we've got you covered. Remember, Graditude is Job 1.
+
+## Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/)
+- [docker-compose](https://docs.docker.com/compose/install/)
+
+## Local Development
+
+### Getting Started
+
+1. Configure local .env file (template provided)
+
+2. Setup pre-commit
+
+   ```bash
+   pre-commit install
+   ```
+
+- This repo has default integration with pre-commit for identifying simple issues before submission to code review.
+
+- The linters and stylers include:
+  - Code styling: black
+  - Linting: flake8
+  - Static Type Checking: mypy
+
+### Run the Stack
+
+This brings up both Django and PostgreSQL. The first time it is run it might take a while to get started, but subsequent runs will occur quickly.
+
+Open a terminal at the backend root and start the dev server for local development:
+
+```bash
+docker-compose up
+```
+
+### Execute Management Commands
+
+Run a command inside the docker container:
+
+```bash
+docker-compose run --rm web [command]
+```
+
+## Basic Commands
+
+### Setting Up Users
+
+- To create an superuser account, use this command:
+
+```bash
+python manage.py createsuperuser
+```
+
+### Type checks
+
+Running type checks with mypy:
+
+```bash
+mypy graditude
+```
+
+### Test coverage
+
+To run the tests, check your test coverage, and generate an HTML coverage report::
+
+```bash
+coverage run -m pytest
+coverage html
+open htmlcov/index.html
+```
+
+### Running tests with py.test
+
+```bash
+pytest
+```
