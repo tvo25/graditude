@@ -64,4 +64,3 @@ CELERY_TASK_EAGER_PROPAGATES = True
 # django-cors-headers
 # ------------------------------------------------------------------------------
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = ("http://localhost:8000", "http://localhost:8080")

@@ -9,7 +9,7 @@ ROOT_DIR = (
     environ.Path(__file__) - 3
 )  # (graditude/config/settings/base.py - 3 = graditude/)
 APPS_DIR = ROOT_DIR.path("graditude")
-FRONTEND_DIR = ROOT_DIR.path("frontend")
+FRONTEND_DIR = ROOT_DIR.path("../frontend")
 
 env = environ.Env()
 
@@ -149,7 +149,7 @@ STATIC_URL = "/static/"
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
     str(APPS_DIR.path("static")),
-    os.path.join(FRONTEND_DIR, "dist/static"),
+    os.path.join(FRONTEND_DIR, "build/static"),
 ]
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = [
@@ -172,7 +172,7 @@ TEMPLATES = [
         # https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         # https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
-        "DIRS": [str(APPS_DIR.path("templates")), os.path.join(FRONTEND_DIR, "dist")],
+        "DIRS": [str(APPS_DIR.path("templates")), os.path.join(FRONTEND_DIR, "build")],
         "OPTIONS": {
             # https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
             # https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
@@ -303,6 +303,12 @@ WEBPACK_LOADER = {
         "STATS_FILE": os.path.join(FRONTEND_DIR, "webpack-stats.json"),
     }
 }
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+    "http://localhost:8000",
+    "http://localhost:8080",
+    "http://localhost:3000",
+)
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAdminUser",),
