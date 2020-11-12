@@ -18,18 +18,17 @@
     "customize-cra": "^0.9.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-app-rewired": "^2.1.5",
     "react-async": "^10.0.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "CI=1 react-app-rewired test",
-    "test:watch": "react-app-rewired test",
-    "test:coverage": "CI=1 react-app-rewired test --coverage",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "CI=1 react-scripts test",
+    "test:watch": "react-scripts test",
+    "test:coverage": "CI=1 react-scripts test --coverage",
     "eject": "react-scripts eject",
     "precommit": "lint-staged"
   },
