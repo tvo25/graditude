@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from graditude.jobs.models import Company, Position, Post, Source
+
+admin.site.register(Company)
+admin.site.register(Position)
+admin.site.register(Post)
+admin.site.register(Source)
