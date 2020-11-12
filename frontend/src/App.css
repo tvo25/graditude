@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Raleway:300&display=swap');
+@import '~antd/dist/antd.css';
 
 h1,
 h2,
