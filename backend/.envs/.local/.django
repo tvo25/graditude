@@ -1,0 +1,17 @@
+# General
+# ------------------------------------------------------------------------------
+DJANGO_SETTINGS_MODULE=config.settings.local
+DOMAIN_NAME=http://localhost:8000
+
+# Redis
+# ------------------------------------------------------------------------------
+REDIS_URL=redis://redis:6379/0
+
+# Flower
+# ------------------------------------------------------------------------------
+CELERY_FLOWER_USER=IfVEHezeCxRGRiYSWjsxLfJylfVXuOaa
+CELERY_FLOWER_PASSWORD=YHWhB6dQHAygg3RSKUX432ycAxa8eLSfSjIu9SUh9Kjih0ts1cFw0r8Du2GOBPpN
+
+# django-cors-headers
+# ------------------------------------------------------------------------------
+CORS_ORIGIN_WHITELIST=http://localhost:3000

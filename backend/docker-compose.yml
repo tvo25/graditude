@@ -1,62 +1,66 @@
 version: "2"
 
+volumes:
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
+
 services:
   postgres:
-    image: postgres:11.6
-    container_name: postgres
+    build:
+      context: .
+      dockerfile: ./docker/production/postgres/Dockerfile
+    image: graditude_local_postgres
     volumes:
-      - /local_postgres_data:/var/lib/postgresql/data
-      - /local_postgres_data_backups:/backups
+      - local_postgres_data:/var/lib/postgresql/data
+      - local_postgres_data_backups:/backups
     env_file:
-      - .env
-    expose:
-      - "${POSTGRES_PORT}"
+      - ./.envs/.local/.postgres
     ports:
-      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
-    command: -p ${POSTGRES_PORT}
+      - "5433:5432"
 
-  web: &web
-    restart: always
-    image: web
-    container_name: web
-    build: ./
-    volumes:
-      - ./:/code
-    ports:
-      - "8000:8000"
-    environment:
-      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
-    env_file:
-      - .env
+  django: &django
+    build:
+      context: .
+      dockerfile: ./docker/local/django/Dockerfile
+    image: graditude_local_django
     depends_on:
       - postgres
-    command: >
-      bash -c "python wait_for_postgres.py &&
-                python manage.py migrate &&
-                python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    ports:
+      - "8000:8000"
+    command: /start
 
   redis:
     image: redis:5.0
-    container_name: redis
 
-  celery_worker:
-    image: celery_worker
-    container_name: celery_worker
-    volumes:
-      - ./:/code
+  celeryworker:
+    <<: *django
+    image: graditude_local_celeryworker
+    container_name: celeryworker
     depends_on:
       - redis
-      - web
       - postgres
-    command: celery -A config.celery_app worker -l INFO
+    ports: []
+    command: /start-celeryworker
 
-  celery_beat:
-    image: celery_beat
-    container_name: celery_beat
-    volumes:
-      - ./:/code
+  celerybeat:
+    <<: *django
+    image: graditude_local_celerybeat
+    container_name: celerybeat
     depends_on:
       - redis
-      - web
       - postgres
-    command: celery -A config.celery_app beat -l INFO
+    ports: []
+    command: /start-celerybeat
+
+  flower:
+    <<: *django
+    image: graditude_local_flower
+    container_name: flower
+    ports:
+      - "5555:5555"
+    command: /start-flower
