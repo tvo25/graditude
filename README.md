@@ -1,5 +1,8 @@
 # Graditude
 
+![Front-end CI](https://github.com/tomvothecoder/graditude/workflows/Front-end%20CI/badge.svg)
+![Back-end CI](https://github.com/tomvothecoder/graditude/workflows/Back-end%20CI/badge.svg)
+
 [![Codecov Coverage](https://codecov.io/gh/tomvothecoder/graditude/branch/master/graph/badge.svg)](https://codecov.io/gh/tomvothecoder/graditude)
 
 Graditude is a project designed for new graduate software engineers to land their next job. Graditude's design is based on minimalism in order to provide a streamlined job hunting experience. Whether the focus is in software engineering or web dev, we've got you covered.
