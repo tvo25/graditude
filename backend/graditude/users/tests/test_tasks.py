@@ -1,7 +1,6 @@
 import pytest
 from celery.result import EagerResult
 
-
 from graditude.users.tasks import get_users_count
 from graditude.users.tests.factories import UserFactory
 

@@ -1,5 +1,4 @@
 import pytest
-
 from django.urls import reverse
 
 from graditude.jobs.tests import factories
@@ -8,7 +7,7 @@ pytestmark = pytest.mark.django_db
 
 
 def test_list():
-    assert reverse("jobs:list") == f"/api/v1/jobs/posts/"
+    assert reverse("jobs:list") == "/api/v1/jobs/posts/"
 
 
 def test_detail():
