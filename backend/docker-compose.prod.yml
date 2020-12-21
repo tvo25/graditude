@@ -12,7 +12,7 @@ services:
       dockerfile: ./docker/production/django/Dockerfile
     image: graditude_production_django
     networks:
-      - traefik_default
+      - graditude_traefik_default
       - default
     depends_on:
       - postgres
@@ -57,5 +57,5 @@ services:
     command: /start-flower
 
 networks:
-  traefik_default:
+  graditude_traefik_default:
     external: true

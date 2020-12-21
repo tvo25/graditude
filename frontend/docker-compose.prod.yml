@@ -7,7 +7,7 @@ services:
       dockerfile: ./docker/production/react/Dockerfile
     image: graditude_production_react
     networks:
-      - traefik_default
+      - graditude_traefik_default
       - default
     container_name: react
     env_file:
@@ -20,5 +20,5 @@ services:
     stdin_open: true
 
 networks:
-  traefik_default:
+  graditude_traefik_default:
     external: true
