@@ -17,9 +17,9 @@
     "babel-plugin-import": "1.13.3",
     "customize-cra": "0.9.1",
     "prop-types": "15.7.2",
-    "react": "16.13.1",
+    "react": "16.14.0",
     "react-async": "10.0.1",
-    "react-dom": "16.13.1",
+    "react-dom": "16.14.0",
     "react-scripts": "3.4.4",
     "typescript": "3.9.7"
   },
