@@ -1,0 +1,8 @@
+# General
+# ------------------------------------------------------------------------------
+PUBLIC_URL=
+
+# Graditude API
+# ------------------------------------------------------------------------------
+# https://github.com/tomvothecoder/graditude/tree/master/backend
+REACT_APP_METAGRID_API_URL=http://api.localhost:5000/
