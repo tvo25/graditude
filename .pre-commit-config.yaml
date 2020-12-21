@@ -3,25 +3,17 @@ default_stages: [commit]
 fail_fast: true
 
 repos:
-  # FRONTEND
-  # ------------------------------------------------------------------------------
-  - repo: local
-    hooks:
-      - id: eslint & prettier
-        name: eslint
-        language: system
-        files: .+(js|jsx|ts|tsx|css|sass|less|json)
-        entry: bash -c 'cd frontend && yarn lint'
-
-  # BACKEND
-  # ------------------------------------------------------------------------------
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: master
     hooks:
       - id: end-of-file-fixer
+        files: (^|/)a/.+\.(py|html|sh|css|js|ts|jsx|tsx|json)$
       - id: trailing-whitespace
-      - id: name-tests-test
+        files: (^|/)a/.+\.(py|html|sh|css|js|ts|jsx|tsx|json)$
+      - id: check-yaml
 
+  # BACKEND
+  # ------------------------------------------------------------------------------
   - repo: local
     hooks:
       - id: flake8
@@ -41,3 +33,13 @@ repos:
     rev: v0.730
     hooks:
       - id: mypy
+
+  # FRONTEND
+  # ------------------------------------------------------------------------------
+  - repo: local
+    hooks:
+      - id: eslint & prettier
+        name: eslint
+        language: system
+        files: .+(js|jsx|ts|tsx|css|sass|less)
+        entry: bash -c 'cd frontend && yarn lint'
