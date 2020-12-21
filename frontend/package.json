@@ -16,6 +16,7 @@
     "axios": "0.21.0",
     "babel-plugin-import": "1.13.3",
     "customize-cra": "0.9.1",
+    "env-cmd": "10.1.0",
     "prop-types": "15.7.2",
     "react": "16.14.0",
     "react-async": "10.0.1",
@@ -24,12 +25,15 @@
     "typescript": "3.9.7"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "CI=1 react-scripts test",
-    "test:watch": "react-scripts test",
-    "test:coverage": "CI=1 react-scripts test --coverage",
+    "start:local": "env-cmd -f .envs/.local/.react react-scripts start",
+    "start:production": "env-cmd -f .envs/.production/.react react-scripts start",
+    "build:local": "env-cmd -f .envs/.local/.react react-scripts build",
+    "build:production": "env-cmd -f .envs/.production/.react react-scripts build",
     "eject": "react-scripts eject",
+    "test": "CI=1 env-cmd -f .envs/.local/.react react-scripts test --env=jest-environment-jsdom-sixteen",
+    "test:watch": "env-cmd -f .envs/.local/.react react-scripts test --env=jest-environment-jsdom-sixteen",
+    "test:coverage": "CI=1 env-cmd -f .envs/.local/.react react-scripts test --coverage --env=jest-environment-jsdom-sixteen",
+    "lint": "eslint './src/**/*.{js,jsx,ts,tsx,json}' --fix --no-error-on-unmatched-pattern",
     "precommit": "lint-staged"
   },
   "eslintConfig": {
@@ -61,20 +65,24 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "**/*.{js,jsx}",
+      "**/*.{js,jsx,ts,tsx}",
       "!**/node_modules/**",
       "!**/coverage/**",
+      "!src/index.tsx",
       "!**/serviceWorker.js",
-      "!**/index.js"
-    ]
-  },
-  "lint-staged": {
-    "src/**/*.+(js|jsx|ts|tsx|json)": [
-      "eslint --fix"
+      "!**/react-app-env.d.ts",
+      "!**/lib/**"
     ],
-    "src/**/*.+(js|jsx|ts|tsx|css|sass|less|json)": [
-      "prettier --write"
-    ]
-  },
-  "proxy": "http://127.0.0.1:8000"
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      },
+      "./src/components/App/App.tsx": {
+        "lines": 100
+      }
+    }
+  }
 }

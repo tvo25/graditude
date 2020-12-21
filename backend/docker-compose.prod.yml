@@ -11,6 +11,9 @@ services:
       context: .
       dockerfile: ./docker/production/django/Dockerfile
     image: graditude_production_django
+    networks:
+      - graditude_traefik_default
+      - default
     depends_on:
       - postgres
       - redis
@@ -32,20 +35,6 @@ services:
     env_file:
       - ./.envs/.production/.postgres
 
-  traefik:
-    build:
-      context: .
-      dockerfile: ./docker/production/traefik/Dockerfile
-    image: graditude_production_traefik
-    depends_on:
-      - django
-    volumes:
-      - production_traefik:/etc/traefik/acme:z
-    ports:
-      - "0.0.0.0:80:80"
-      - "0.0.0.0:443:443"
-      - "0.0.0.0:5555:5555"
-
   redis:
     image: redis:5.0
 
@@ -66,3 +55,7 @@ services:
     image: graditude_production_flower
     ports: []
     command: /start-flower
+
+networks:
+  graditude_traefik_default:
+    external: true
