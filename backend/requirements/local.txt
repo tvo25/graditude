@@ -6,6 +6,7 @@ psycopg2-binary==2.8.6  # https://github.com/psycopg/psycopg2
 
 # Testing
 # ------------------------------------------------------------------------------
+django-stubs==1.7.0  # https://github.com/typeddjango/django-stubs
 mypy==0.790  # https://github.com/python/mypy
 pytest==6.2.1  # https://github.com/pytest-dev/pytest
 pytest-cov==2.10.1  # https://github.com/pytest-dev/pytest-cov
