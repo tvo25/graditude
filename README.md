@@ -1,6 +1,5 @@
 # Graditude
 
-[![pipeline status](https://travis-ci.com/tomvothecoder/graditude.svg?branch=master)](https://travis-ci.com/tomvothecoder/graditude)
 [![Codecov Coverage](https://codecov.io/gh/tomvothecoder/graditude/branch/master/graph/badge.svg)](https://codecov.io/gh/tomvothecoder/graditude)
 
 Graditude is a project designed for new graduate software engineers to land their next job. Graditude's design is based on minimalism in order to provide a streamlined job hunting experience. Whether the focus is in software engineering or web dev, we've got you covered.
@@ -77,7 +76,7 @@ Open the project in a terminal and `cd backend`.
 This can take a while, especially the first time you run this particular command on your development system but subsequent runs will occur quickly:
 
 ```bash
-docker-compose -f docker-compose.yml up --build
+docker-compose -p graditude_backend_dev -f docker-compose.yml up --build
 ```
 
 Remove the `--build` flag when you don't need to rebuild (e.g. no updates to Docker/docker-compose related files).
@@ -97,7 +96,7 @@ Open the project in a terminal and `cd frontend`.
 This can take a while, especially the first time you run this particular command on your development system but subsequent runs will occur quickly:
 
 ```bash
-docker-compose -f docker-compose.yml up --build
+docker-compose -p graditude_frontend_dev -f docker-compose.yml up --build
 ```
 
 Remove the `--build` flag when you don't need to rebuild (e.g. no updates to Docker/docker-compose related files).
@@ -110,7 +109,9 @@ Remove the `--build` flag when you don't need to rebuild (e.g. no updates to Doc
 
 ## Getting Started for Production
 
-Building the production environment involves the same steps as local; however, use `docker-compose.production.yml` instead. The environment also needs to be configured.
+Building the production environment involves the same steps as local. However, use `_prod` instead of `_dev` for the `-p` flag, and use `docker-compose.prod.yml` for the `-f` flag.
+
+You also need to configure the production environment using the steps below.
 
 ### 1. Traefik
 
