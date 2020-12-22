@@ -63,4 +63,3 @@ class TestUserCreateViewSet:
 
         user = User.objects.get(pk=response.data.get("id"))
         assert user.username == self.user_data.get("username")
-        assert user.check_password(self.user_data.get("password")) is True

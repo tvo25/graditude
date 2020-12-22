@@ -1,6 +1,6 @@
 import pytest
-from django.conf import settings
 
+from graditude.users.models import User
 from graditude.users.tests.factories import UserFactory
 
 
@@ -10,5 +10,5 @@ def media_storage(settings, tmpdir):
 
 
 @pytest.fixture
-def user() -> settings.AUTH_USER_MODEL:
+def user() -> User:
     return UserFactory()
