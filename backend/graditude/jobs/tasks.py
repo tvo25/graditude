@@ -2,8 +2,8 @@ import logging
 from datetime import date, timedelta
 from typing import Any, Dict, List, Union
 
-import requests
 import pandas as pd
+import requests
 from bs4 import BeautifulSoup as bs
 
 from config import celery_app
@@ -64,7 +64,7 @@ class IndeedScraper:
 
     def __init__(self, pages=None):
         # The search queries to be used in requests
-        positions = Position.objects.all()  # type: List[Position]
+        positions = list(Position.objects.all())  # type: List[Position]
         self.search_queries = [obj.search_str() for obj in positions]  # type: List[str]
 
         # Every page contains 10 posts, so itereate in counts of 10
@@ -125,7 +125,7 @@ class IndeedScraper:
         based on the 'company', 'date_posted', and 'title' fields. Often
         times there are multiple of the same job posting listed on
         different days which is not useful to search through for the end-user.
-         """
+        """
         logger.info("Parsing posts")
 
         self.df.title = self.df.title.str.strip()

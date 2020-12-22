@@ -19,15 +19,10 @@ class TestJobsAPI:
 
     def test_list(self):
         list_url = reverse("jobs:list")
-
         factories.PostFactory.create_batch(20)
 
         response = self.client.get(list_url)
-
         assert response.status_code == status.HTTP_200_OK
-
-        # Check that there are Post objects being returned
-        assert len(response.data) > 0
 
     def test_detail(self):
         post = factories.PostFactory()

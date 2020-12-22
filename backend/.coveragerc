@@ -5,13 +5,13 @@ omit =
     *urls.py,
     *manage.py,
     *wsgi.py*,
-    *migrations/*,
-    */venv/*,
     *docs/*
-    *tests/*,
-
+    *migrations/*,
     *settings*,
-    *merge_production_dotenvs_in_dotenv.py*,
+    *postgres-data/*,
+    *tests/*,
+    *venv/*,
+    *config/*
 
 [report]
 # Regexes for lines to exclude from consideration
@@ -34,4 +34,4 @@ exclude_lines =
 ignore_errors = True
 
 [html]
-directory = docs/coverage_report
+directory = htmlcov

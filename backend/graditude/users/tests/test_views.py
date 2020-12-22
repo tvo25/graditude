@@ -1,10 +1,8 @@
 import pytest
-from factory import Faker
+from django.forms.models import model_to_dict
+from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
-
-from django.urls import reverse
-from django.forms.models import model_to_dict
 
 from graditude.users.models import User
 from graditude.users.tests.factories import UserFactory
@@ -65,4 +63,3 @@ class TestUserCreateViewSet:
 
         user = User.objects.get(pk=response.data.get("id"))
         assert user.username == self.user_data.get("username")
-        assert user.check_password(self.user_data.get("password")) is True

@@ -1,7 +1,7 @@
-import React from 'react';
 import { Button, Table } from 'antd';
-import { useAsync } from 'react-async';
 import axios from 'axios';
+import React from 'react';
+import { useAsync } from 'react-async';
 
 const fetchPosts = async () => {
   return axios
@@ -11,7 +11,7 @@ const fetchPosts = async () => {
 };
 
 function SearchTable() {
-  const { data, error, isLoading } = useAsync(fetchPosts);
+  const { data, isLoading } = useAsync(fetchPosts);
 
   if (isLoading) {
     return 'Is Loading';

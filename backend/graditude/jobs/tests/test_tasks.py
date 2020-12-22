@@ -1,8 +1,7 @@
 from datetime import date
 
-import requests
-import pandas as pd
 import pytest
+import requests
 from bs4 import BeautifulSoup as bs
 from celery.result import EagerResult
 

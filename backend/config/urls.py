@@ -2,7 +2,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path, re_path, reverse_lazy
-from django.views import defaults as default_views
 from django.views.generic.base import RedirectView
 from rest_framework.authtoken import views
 from rest_framework.routers import DefaultRouter
@@ -23,7 +22,8 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     # Your stuff: custom urls includes go here
     re_path(
-        r"^$", RedirectView.as_view(url=reverse_lazy("api-root"), permanent=False),
+        r"^$",
+        RedirectView.as_view(url=reverse_lazy("api-root"), permanent=False),
     ),
     path("api/v1/", include(router.urls)),
     path("api/v1/jobs/", include("graditude.jobs.urls", namespace="jobs")),
