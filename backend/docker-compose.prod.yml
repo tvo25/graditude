@@ -36,7 +36,7 @@ services:
       - ./.envs/.production/.postgres
 
   redis:
-    image: redis:5.0
+    image: redis:7.0
 
   celeryworker:
     <<: *django
