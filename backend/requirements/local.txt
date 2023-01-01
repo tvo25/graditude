@@ -22,7 +22,7 @@ black==23.1a1  # https://github.com/ambv/black
 
 # Django
 # ------------------------------------------------------------------------------
-django-extensions==3.1.0  # https://github.com/django-extensions/django-extensions
+django-extensions==3.2.1  # https://github.com/django-extensions/django-extensions
 
 # Celery
 # ------------------------------------------------------------------------------
