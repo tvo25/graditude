@@ -27,7 +27,7 @@ django-cors-headers==3.13.0  # https://github.com/ottoyiu/django-cors-headers
 
 # Additional
 # ------------------------------------------------------------------------------
-beautifulsoup4==4.9.3  # https://www.crummy.com/software/BeautifulSoup/
+beautifulsoup4==4.11.2  # https://www.crummy.com/software/BeautifulSoup/
 numpy==1.19.4  # https://github.com/numpy/numpy
 pandas==1.1.5  # https://github.com/pandas-dev/pandas
 pre-commit==2.9.3  # https://github.com/pre-commit/pre-commit
