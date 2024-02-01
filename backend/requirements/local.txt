@@ -26,4 +26,4 @@ django-extensions==3.2.3  # https://github.com/django-extensions/django-extensio
 
 # Celery
 # ------------------------------------------------------------------------------
-eventlet==0.30.0  # https://github.com/eventlet/eventlet
+eventlet==0.35.1  # https://github.com/eventlet/eventlet
