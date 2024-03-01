@@ -1,6 +1,6 @@
 
 python-slugify==8.0.4  # https://github.com/un33k/python-slugify
-pytz==2020.4  # https://github.com/stub42/pytz
+pytz==2024.1  # https://github.com/stub42/pytz
 Pillow==8.0.1  # https://github.com/python-pillow/Pillow
 argon2-cffi==20.1.0  # https://github.com/hynek/argon2_cffi
 redis==3.5.3  # https://github.com/antirez/redis
